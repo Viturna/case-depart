@@ -1,0 +1,169 @@
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--sapin);
+  opacity: 0.5;
+  z-index: 1000;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 460px;
+  background-color: var(--sable);
+  color: var(--sapin);
+  border-left: var(--border-1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 24px 32px;
+  border-bottom: var(--border-1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.closeBtn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  background: none;
+  border: none;
+  color: var(--sapin);
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  background-color: var(--rose);
+}
+
+.body {
+  padding: 32px;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--sapin);
+  margin-top: 32px;
+  text-align: center;
+}
+
+.itemCard {
+  border: var(--border-1);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--sable);
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.itemName {
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.itemPrice {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.itemMeta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--sapin);
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.itemRemoveBtn {
+  margin-top: 4px;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--brique);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.footer {
+  border-top: var(--border-1);
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: var(--sable);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.totalLabel {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.totalValue {
+  font-family: var(--font-title);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--sapin);
+}
+
+.checkoutNotice {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sapin);
+  opacity: 0.8;
+  text-align: center;
+}
+
+.checkoutSuccess {
+  padding: 24px;
+  background-color: var(--rose);
+  border: var(--border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+

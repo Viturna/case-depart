@@ -1,0 +1,53 @@
+.coversWallSection {
+  background-color: var(--sapin);
+  color: var(--sable);
+  border-bottom: var(--border-1);
+  overflow: hidden;
+}
+
+.wallContainer {
+  padding: 48px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.marqueeTrack {
+  display: flex;
+  gap: 32px;
+  width: max-content;
+  padding-left: 32px;
+  animation: wallScroll 45s linear infinite;
+  will-change: transform;
+}
+
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+.coverItem {
+  width: 200px;
+  flex: none;
+  transition: transform 0.2s ease;
+}
+
+.coverItem:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+}
+
+@keyframes wallScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+    transform: none;
+    overflow-x: auto;
+  }
+}
+

@@ -1,0 +1,114 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border: var(--border-1);
+  background-color: var(--sable);
+  position: relative;
+  height: 100%;
+}
+
+.visualArea {
+  padding: 32px;
+  background-color: var(--sable);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: var(--border-1);
+  overflow: hidden;
+}
+
+.visualAreaDark {
+  background-color: var(--sapin);
+}
+
+.badgeWrapper {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.infoArea {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: var(--sable);
+  color: var(--sapin);
+  transition: background-color 0.15s ease;
+}
+
+.card:hover .infoArea {
+  background-color: var(--rose);
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--sapin);
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: var(--border-1);
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+.priceCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  color: var(--sapin);
+}
+
+.priceOld {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-decoration: line-through;
+  color: var(--brique);
+  margin-bottom: 2px;
+}
+
+.bientotText {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sapin);
+  letter-spacing: 0.05em;
+}
+

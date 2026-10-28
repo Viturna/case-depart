@@ -1,0 +1,86 @@
+.coverContainer {
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  border: var(--border-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8cqw;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.variantSable {
+  background-color: var(--sable);
+  color: var(--sapin);
+}
+
+.variantSapin {
+  background-color: var(--sapin);
+  color: var(--sable);
+  border-color: var(--sable);
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4cqw;
+  font-family: var(--font-mono);
+  font-size: 3.5cqw;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.centerArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5cqw;
+  flex-grow: 1;
+  text-align: center;
+  padding: 4cqw 0;
+}
+
+.motifWrapper {
+  width: 28cqw;
+  height: 28cqw;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 8.5cqw;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  margin: 0;
+  word-break: break-word;
+}
+
+.bottomBar {
+  border-top: 1px solid currentColor;
+  padding-top: 4cqw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 3.2cqw;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Pas de gradient ni d'ombre selon DESIGN.md */

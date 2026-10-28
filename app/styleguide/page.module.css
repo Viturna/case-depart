@@ -1,0 +1,226 @@
+.styleguideContainer {
+  min-height: 100vh;
+  background-color: var(--sable);
+  color: var(--sapin);
+}
+
+.introBlock {
+  padding: 64px 48px 48px;
+  border-bottom: var(--border-1);
+}
+
+.subTitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: var(--sapin);
+}
+
+.mainTitle {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  margin-bottom: 24px;
+}
+
+.introText {
+  font-family: var(--font-body);
+  font-size: 18px;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.section {
+  border-bottom: var(--border-1);
+}
+
+.sectionBody {
+  padding: 48px;
+}
+
+/* Grille Couleurs */
+.colorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  border: var(--border-1);
+  background-color: var(--sapin);
+  gap: 1px;
+}
+
+.colorCard {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+
+.colorHex {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.colorMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+}
+
+.colorToken {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.colorUsage {
+  font-family: var(--font-body);
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Typo Scale */
+.typoList {
+  display: flex;
+  flex-direction: column;
+  border: var(--border-1);
+}
+
+.typoRow {
+  padding: 24px 32px;
+  border-bottom: var(--border-1);
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: baseline;
+}
+
+.typoRow:last-child {
+  border-bottom: none;
+}
+
+.typoMeta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Boutons */
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.darkBox {
+  background-color: var(--sapin);
+  color: var(--sable);
+  padding: 32px;
+  border: var(--border-1);
+  margin-top: 24px;
+}
+
+/* Badges */
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
+}
+
+/* Spécifications */
+.specsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  border: var(--border-1);
+  gap: 1px;
+  background-color: var(--sapin);
+}
+
+.specCell {
+  background-color: var(--sable);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.specLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.specValue {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Tableau technique */
+.techTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: var(--border-1);
+}
+
+.techTable th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border-bottom: var(--border-1);
+  text-align: left;
+  background-color: var(--sapin);
+  color: var(--sable);
+}
+
+.techTable td {
+  padding: 16px 20px;
+  border-bottom: var(--border-1);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.techTable tr:last-child td {
+  border-bottom: none;
+}
+
+.highlightRow {
+  background-color: var(--rose) !important;
+}
+
+/* Cartes grid */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .sectionBody {
+    padding: 24px 16px;
+  }
+  .introBlock {
+    padding: 32px 16px;
+  }
+  .typoRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+

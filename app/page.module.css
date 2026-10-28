@@ -1,0 +1,544 @@
+/* ==========================================================================
+   HOMEPAGE STYLES — CASE DÉPART (Minimalisme Industriel / Direction A)
+   ========================================================================== */
+
+/* 00 bis — BANDE SPECS RAPIDES */
+.specsSection {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.specCell {
+  padding: 28px 48px;
+  border-right: var(--border-1);
+  display: flex;
+  flex-direction: column;
+}
+
+.specCell:last-child {
+  border-right: none;
+}
+
+.specNumber {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  margin-top: 12px;
+}
+
+/* 01 — NIVEAUX & ALLURES */
+.niveauxSection {
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.sectionHeaderSimple {
+  padding: 64px 48px 48px;
+  border-bottom: var(--border-1);
+}
+
+.sectionH2 {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(40px, 5.4vw, 80px);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.alluresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.allureCard {
+  padding: 40px 48px 48px;
+  border-right: var(--border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.allureCard:last-child {
+  border-right: none;
+}
+
+.levelBars {
+  display: flex;
+  gap: 4px;
+}
+
+.levelBarFilled {
+  width: 32px;
+  height: 10px;
+  background-color: var(--sapin);
+}
+
+.levelBarOutline {
+  width: 32px;
+  height: 10px;
+  border: 1px solid var(--sapin);
+}
+
+.allureTitle {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.allureDesc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--sapin);
+  margin: 0;
+  max-width: 340px;
+}
+
+.allureFooter {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-top: var(--border-1);
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+/* 03 — NOS CARNETS */
+.carnetsSection {
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.carnetsHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 64px 48px 48px;
+  border-bottom: var(--border-1);
+}
+
+.carnetsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: var(--border-1);
+}
+
+.carnetCol {
+  border-right: var(--border-1);
+}
+
+.carnetCol:last-child {
+  border-right: none;
+}
+
+/* BUNDLE LA COLLECTION */
+.bundleBanner {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.bundleVisual {
+  flex: 1 1 500px;
+  min-width: 0;
+  padding: 48px;
+  background-color: var(--sapin);
+  color: var(--sable);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-right: var(--border-1);
+}
+
+.bundleInfo {
+  flex: 1.2 1 540px;
+  min-width: 0;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.bundlePriceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.bundlePriceOld {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  text-decoration: line-through;
+  color: var(--brique);
+}
+
+.bundlePriceNew {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 48px;
+  color: var(--brique);
+}
+
+/* 04 — DANS UN CARNET, IL Y A… */
+.anatomieSection {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.anatomieLeft {
+  flex: 1 1 440px;
+  min-width: 0;
+  padding: 64px 48px;
+  border-right: var(--border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.anatomieRight {
+  flex: 1.4 1 560px;
+  min-width: 0;
+}
+
+.timelineRow {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) minmax(0, 1.2fr);
+  border-bottom: var(--border-1);
+  padding: 18px 48px;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.timelineRow:last-child {
+  border-bottom: none;
+}
+
+.timelineRowHighlight {
+  background-color: var(--rose) !important;
+}
+
+.timelinePages {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.timelineTitle {
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.timelineDesc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--sapin);
+  margin: 0;
+}
+
+/* 05 — MODE COMPÉTITION (SECTION SOMBRE SAPIN) */
+.competitionSection {
+  background-color: var(--sapin);
+  color: var(--sable);
+  border-bottom: var(--border-1);
+}
+
+.compWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.compLeft {
+  flex: 1.2 1 560px;
+  min-width: 0;
+  padding: 64px 48px;
+  border-right: var(--border-sable-1);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.chronoDisplay {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: clamp(64px, 9vw, 136px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--sable);
+}
+
+.chronoDecimals {
+  font-size: 0.4em;
+}
+
+.compSpecsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: var(--border-sable-1);
+}
+
+.compSpecCell {
+  padding: 16px 20px;
+  border-right: var(--border-sable-1);
+}
+
+.compSpecCell:last-child {
+  border-right: none;
+}
+
+.compRight {
+  flex: 1 1 480px;
+  min-width: 0;
+  padding: 64px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+}
+
+.leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: var(--border-sable-1);
+}
+
+.leaderboardRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: var(--border-sable-1);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.leaderboardRow:last-child {
+  border-bottom: none;
+}
+
+.leaderboardHighlight {
+  background-color: var(--rose) !important;
+  color: var(--sapin) !important;
+  font-weight: 600;
+}
+
+/* 06 — ILS EN PARLENT (CITATIONS FICTIVES) */
+.citationsSection {
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.citationsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.quoteCard {
+  margin: 0;
+  padding: 56px 48px;
+  border-right: var(--border-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  background-color: var(--sable);
+}
+
+.quoteCard:last-child {
+  border-right: none;
+}
+
+.quoteCardHighlight {
+  background-color: var(--rose) !important;
+}
+
+.quoteText {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 28px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.quoteAuthor {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* 07 — POURQUOI CASE DÉPART */
+.avantagesSection {
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.avantagesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.avantageCard {
+  padding: 40px 48px;
+  border-right: var(--border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.avantageCard:last-child {
+  border-right: none;
+}
+
+.avantageTitle {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 22px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.avantageDesc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--sapin);
+  margin: 0;
+}
+
+/* 10 — FAQ SECTION */
+.faqSection {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: var(--border-1);
+  background-color: var(--sable);
+}
+
+.faqLeft {
+  flex: 1 1 380px;
+  min-width: 0;
+  padding: 64px 48px;
+  border-right: var(--border-1);
+}
+
+.faqRight {
+  flex: 1.6 1 600px;
+  min-width: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .specsSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .specCell:nth-child(2) {
+    border-right: none;
+  }
+  .specCell:nth-child(1), .specCell:nth-child(2) {
+    border-bottom: var(--border-1);
+  }
+  .alluresGrid {
+    grid-template-columns: 1fr;
+  }
+  .allureCard {
+    border-right: none;
+    border-bottom: var(--border-1);
+    padding: 32px 24px;
+  }
+  .carnetsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .carnetCol:nth-child(2) {
+    border-right: none;
+  }
+  .carnetCol:nth-child(1), .carnetCol:nth-child(2) {
+    border-bottom: var(--border-1);
+  }
+  .anatomieLeft {
+    border-right: none;
+    border-bottom: var(--border-1);
+  }
+  .timelineRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 20px 24px;
+  }
+  .compLeft {
+    border-right: none;
+    border-bottom: var(--border-sable-1);
+  }
+  .citationsGrid {
+    grid-template-columns: 1fr;
+  }
+  .quoteCard {
+    border-right: none;
+    border-bottom: var(--border-1);
+    padding: 40px 24px;
+  }
+  .avantagesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .avantageCard:nth-child(2) {
+    border-right: none;
+  }
+  .avantageCard:nth-child(1), .avantageCard:nth-child(2) {
+    border-bottom: var(--border-1);
+  }
+  .faqLeft {
+    border-right: none;
+    border-bottom: var(--border-1);
+    padding: 40px 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .specsSection {
+    grid-template-columns: 1fr;
+  }
+  .specCell {
+    border-right: none;
+    border-bottom: var(--border-1);
+    padding: 24px 20px;
+  }
+  .carnetsGrid {
+    grid-template-columns: 1fr;
+  }
+  .carnetCol {
+    border-right: none;
+    border-bottom: var(--border-1);
+  }
+  .avantagesGrid {
+    grid-template-columns: 1fr;
+  }
+  .avantageCard {
+    border-right: none;
+    border-bottom: var(--border-1);
+    padding: 32px 20px;
+  }
+  .sectionHeaderSimple, .carnetsHeader {
+    padding: 40px 20px 28px;
+  }
+}

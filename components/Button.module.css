@@ -1,0 +1,84 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 13px;
+  padding: 0 24px;
+  border-radius: var(--radius-base);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+  white-space: nowrap;
+}
+
+/* Tailles */
+.sizeSm {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 12px;
+}
+
+.sizeMd {
+  height: 52px;
+  padding: 0 24px;
+  font-size: 13px;
+}
+
+.sizeLg {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 14px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Variantes */
+.primary {
+  background-color: var(--brique);
+  color: var(--sable);
+  border: 1px solid var(--brique);
+}
+
+.primary:hover, .primary:focus-visible {
+  background-color: var(--rose);
+  color: var(--sapin);
+  border-color: var(--sapin);
+}
+
+.secondary {
+  background-color: transparent;
+  color: var(--sapin);
+  border: var(--border-1);
+}
+
+.secondary:hover, .secondary:focus-visible {
+  background-color: var(--rose);
+  color: var(--sapin);
+  border-color: var(--sapin);
+}
+
+.dark {
+  background-color: transparent;
+  color: var(--sable);
+  border: var(--border-sable-1);
+}
+
+.dark:hover, .dark:focus-visible {
+  background-color: var(--rose);
+  color: var(--sapin);
+  border-color: var(--rose);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+

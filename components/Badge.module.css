@@ -1,0 +1,38 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: var(--radius-round);
+  background-color: var(--rose);
+  color: var(--sapin);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 12px;
+  line-height: 1.15;
+  border: var(--border-1);
+  transform: rotate(var(--rotation, -4deg));
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.sizeSm {
+  width: 84px;
+  height: 84px;
+  font-size: 10px;
+}
+
+.sizeMd {
+  width: 104px;
+  height: 104px;
+  font-size: 11px;
+}
+
+.sizeLg {
+  width: 128px;
+  height: 128px;
+  font-size: 12px;
+}
+

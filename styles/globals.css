@@ -1,0 +1,111 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background-color: var(--rose);
+  color: var(--sapin);
+}
+
+::-moz-selection {
+  background-color: var(--rose);
+  color: var(--sapin);
+}
+
+html, body {
+  min-height: 100%;
+  background-color: var(--sable);
+  color: var(--sapin);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* Typographie de base selon DESIGN.md */
+.h {
+  font-family: var(--font-title);
+  font-stretch: 125%;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+}
+
+.m {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+}
+
+/* Conteneur principal 1440px avec filets 1px gauche et droite */
+.site-container {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  border-left: var(--border-1);
+  border-right: var(--border-1);
+  background-color: var(--sable);
+  position: relative;
+}
+
+/* Barre d'étiquette de section numérotée */
+.section-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 48px;
+  border-bottom: var(--border-1);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sapin);
+}
+
+.section-tag-dark {
+  background-color: var(--sapin);
+  color: var(--sable);
+  border-bottom: var(--border-sable-1);
+}
+
+/* Sections sombres */
+.section-dark {
+  background-color: var(--sapin);
+  color: var(--sable);
+  border-bottom: var(--border-1);
+}
+
+/* Respect strict de prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

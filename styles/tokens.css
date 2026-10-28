@@ -1,0 +1,45 @@
+:root {
+  /* Palette stricte DESIGN.md (Direction A) */
+  --sable: #EFDEC2;
+  --sapin: #315A54;
+  --brique: #9F1014;
+  --rose: #FEC2DC;
+
+  /* Aliases fonctionnels */
+  --color-bg: var(--sable);
+  --color-text: var(--sapin);
+  --color-border: var(--sapin);
+  --color-primary: var(--brique);
+  --color-accent: var(--rose);
+
+  /* Filets (1px partout, 2px pour sudoku et contour grille) */
+  --border-1: 1px solid var(--sapin);
+  --border-2: 2px solid var(--sapin);
+  --border-sable-1: 1px solid var(--sable);
+  --border-sable-2: 2px solid var(--sable);
+
+  /* Rayons : 0 partout sauf badges ronds */
+  --radius-base: 0px;
+  --radius-round: 50%;
+
+  /* Largeur de référence : 1440px max */
+  --container-max: 1440px;
+
+  /* Unité de base : 8px */
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-72: 72px;
+
+  /* Typographie */
+  --font-title: var(--font-archivo), 'Archivo', sans-serif;
+  --font-body: var(--font-inter), 'Inter', sans-serif;
+  --font-mono: var(--font-plex-mono), 'IBM Plex Mono', monospace;
+}
+
