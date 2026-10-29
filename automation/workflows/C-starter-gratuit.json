@@ -1,0 +1,383 @@
+{
+  "name": "C — Starter gratuit",
+  "nodes": [
+    {
+      "id": "webhook-starter",
+      "name": "Webhook Formulaire Starter",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        300
+      ],
+      "parameters": {
+        "path": "case-depart-starter",
+        "httpMethod": "POST",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "notes": "Appelé par le formulaire de téléchargement du Starter sur le site.\nURL : {BASE_URL}/webhook/case-depart-starter\nLe site envoie : { email, consentement: true|false, theme?, source? }",
+      "webhookId": "c0000000-0000-4000-8000-000000000001"
+    },
+    {
+      "id": "code-validate-starter",
+      "name": "Valider l'e-mail et le consentement",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\n// ---------------------------------------------------------------------------\n// Valide l'e-mail et le consentement envoyés par le formulaire du site.\n// ---------------------------------------------------------------------------\nconst body = $input.first().json.body || $input.first().json;\n\nconst email = String(body.email || '').trim().toLowerCase();\nconst consent = body.consentement === true || body.consentement === 'true' || body.consentement === '1';\n\n// Validation basique de l'e-mail\nconst emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\nif (!emailRegex.test(email)) {\n  throw new Error('E-mail invalide : ' + email);\n}\nif (!consent) {\n  throw new Error('Consentement absent. Le contact ne peut pas être ajouté.');\n}\n\nconst source = String(body.source || 'site').trim();\nconst theme  = String(body.theme  || '').trim();\n\nreturn [{ json: { email, consentement: true, source, theme } }];\n"
+      },
+      "notes": "Rejette les e-mails invalides et les contacts sans consentement.",
+      "notesInFlow": true
+    },
+    {
+      "id": "http-upsert-lead",
+      "name": "Enregistrer le lead Starter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SUPABASE_URL + '/rest/v1/leads_starter' }}",
+        "authentication": "none",
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=minimal,resolution=ignore-duplicates"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ email: $json.email, consentement: $json.consentement, theme: $json.theme || null, source: $json.source || null }) }}"
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "notes": "on conflict do nothing (resolution=ignore-duplicates) : un e-mail déjà inscrit n'est pas dupliqué.",
+      "notesInFlow": false
+    },
+    {
+      "id": "http-add-to-list",
+      "name": "Ajouter à la liste e-mail",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EMAIL_PROVIDER_URL }}",
+        "authentication": "none",
+        "options": {
+          "timeout": 15000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $env.EMAIL_PROVIDER_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ email: $json.email }) }}"
+      },
+      "onError": "continueRegularOutput",
+      "notes": "TODO_PROVIDER : adapte l'URL et le corps à ton fournisseur.\n  - Brevo : POST https://api.brevo.com/v3/contacts  { email, listIds: [ID], updateEnabled: true }\n  - MailerLite : POST https://connect.mailerlite.com/api/subscribers  { email, groups: [\"ID\"] }\n  - Resend : POST https://api.resend.com/audiences/{id}/contacts  { email }\nVoir docs/configuration-n8n.md.",
+      "notesInFlow": false
+    },
+    {
+      "id": "http-find-starter",
+      "name": "Chercher le carnet Starter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        300
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.SUPABASE_URL + '/rest/v1/carnets?type=eq.starter&statut=eq.pret&select=*&order=created_at.desc&limit=1' }}",
+        "authentication": "none",
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "notes": "Renvoie le Starter le plus récent au statut pret. Trié par created_at desc.",
+      "notesInFlow": false
+    },
+    {
+      "id": "code-find-starter-path",
+      "name": "Trouver le chemin PDF Starter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\n// ---------------------------------------------------------------------------\n// Cherche le PDF Starter le plus récent au statut 'pret'.\n// Le nœud HTTP précédent a renvoyé le carnet Supabase.\n// ---------------------------------------------------------------------------\nconst rows = $input.all().map(function(i) { return i.json; });\nif (rows.length === 0) {\n  throw new Error('Aucun carnet Starter au statut pret. Lance le workflow A avec le type Starter d'abord.');\n}\n// Supabase renvoie déjà trié par created_at desc (voir l'URL du nœud précédent)\nconst carnet = rows[0];\nconst format = 'A4'; // le Starter est toujours en A4\nconst pdfPaths = carnet.pdf_paths || {};\nconst pdfPath  = pdfPaths[format] || pdfPaths['A4'];\nif (!pdfPath) {\n  throw new Error('PDF A4 introuvable dans le carnet Starter : ' + carnet.slug);\n}\nreturn [{ json: { carnet_slug: carnet.slug, pdf_path: pdfPath, titre: carnet.titre } }];\n"
+      },
+      "notes": "Extrait le chemin A4 du Starter depuis le champ pdf_paths.",
+      "notesInFlow": false
+    },
+    {
+      "id": "http-sign-starter",
+      "name": "Signer le lien Starter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SUPABASE_URL + '/storage/v1/object/sign/pdfs/' + $json.pdf_path }}",
+        "authentication": "none",
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ expiresIn: Number($env.SIGNED_URL_TTL_SECONDS || 604800) }) }}"
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "notes": "Lien signé valable 7 jours.",
+      "notesInFlow": false
+    },
+    {
+      "id": "http-email-starter",
+      "name": "Envoyer l'e-mail du Starter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1480,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EMAIL_PROVIDER_URL }}",
+        "authentication": "none",
+        "options": {
+          "timeout": 30000
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $env.EMAIL_PROVIDER_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ from: $env.EMAIL_FROM, to: $(\"Valider l'e-mail et le consentement\").first().json.email, subject: \"🎁 Ton Starter Case Départ est là !\", html: \"<p>Hello ! 👋</p><p>Ton Starter Case Départ est prêt. C'est un mini-carnet de 3 grilles pour tester le concept avant de plonger dans le grand bain !</p><p><a href=\\\"\" + $env.SUPABASE_URL + \"/storage/v1\" + $json.signedURL + \"\\\" style=\\\"background:#1F2340;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:bold;\\\">📥 Télécharger le Starter</a></p><p>Le lien est valable <strong>7 jours</strong>.</p><p>Bonne course ! 🏁</p><p style=\\\"font-size:0.85em;color:#888;\\\">Case Départ · Sudokus modernes</p>\" }) }}"
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000,
+      "notes": "TODO_PROVIDER : adapte l'URL et le corps à ton fournisseur e-mail (voir nœud \"Ajouter à la liste e-mail\" pour les exemples).",
+      "notesInFlow": false
+    },
+    {
+      "id": "respond-ok",
+      "name": "Répondre : succès",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1720,
+        200
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ JSON.stringify({ ok: true, message: \"Ton Starter est en route !\" }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "respond-err",
+      "name": "Répondre : erreur de validation",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        280,
+        500
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ JSON.stringify({ ok: false, error: $json.message || \"Erreur de validation\" }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Formulaire Starter": {
+      "main": [
+        [
+          {
+            "node": "Valider l'e-mail et le consentement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valider l'e-mail et le consentement": {
+      "main": [
+        [
+          {
+            "node": "Enregistrer le lead Starter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enregistrer le lead Starter": {
+      "main": [
+        [
+          {
+            "node": "Ajouter à la liste e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ajouter à la liste e-mail": {
+      "main": [
+        [
+          {
+            "node": "Chercher le carnet Starter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher le carnet Starter": {
+      "main": [
+        [
+          {
+            "node": "Trouver le chemin PDF Starter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trouver le chemin PDF Starter": {
+      "main": [
+        [
+          {
+            "node": "Signer le lien Starter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Signer le lien Starter": {
+      "main": [
+        [
+          {
+            "node": "Envoyer l'e-mail du Starter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer l'e-mail du Starter": {
+      "main": [
+        [
+          {
+            "node": "Répondre : succès",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "staticData": null,
+  "pinData": {},
+  "meta": {
+    "generatedBy": "automation/scripts/build-workflows.js",
+    "description": "Reçoit une inscription au Starter gratuit : valide, enregistre le lead, ajoute à la liste e-mail, envoie le PDF Starter par lien signé."
+  },
+  "tags": []
+}

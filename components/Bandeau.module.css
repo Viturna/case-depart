@@ -1,64 +1,35 @@
-.bandeau {
-  height: 40px;
-  background-color: var(--sapin);
-  color: var(--sable);
+.marquee {
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  border-bottom: var(--border-1);
-  position: relative;
-  z-index: 100;
-  width: 100%;
+  border-block: var(--line);
+  background: var(--blanc);
 }
 
 .track {
   display: flex;
-  align-items: center;
-  white-space: nowrap;
-  animation: scrollMarquee 45s linear infinite;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  will-change: transform;
+  width: max-content;
+  animation: defile var(--dur-marquee) linear infinite;
 }
 
-.track:hover {
-  animation-play-state: paused;
-}
+.marquee:hover .track { animation-play-state: paused; }
 
-.itemGroup {
-  display: flex;
-  align-items: center;
-}
+.group { display: flex; list-style: none; }
 
 .item {
-  padding: 0 16px;
-  display: inline-flex;
-  align-items: center;
+  font-family: var(--font-title);
+  font-weight: var(--weight-title);
+  font-size: var(--fs-h3);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-title);
+  padding-block: var(--space-3);
+  white-space: nowrap;
 }
 
-.separator {
-  color: var(--sable);
-  opacity: 0.5;
-  user-select: none;
-}
+.dot { padding-inline: var(--space-5); color: var(--nuit); }
 
-@keyframes scrollMarquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+@keyframes defile {
+  to { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track {
-    animation: none;
-    transform: none;
-    overflow-x: auto;
-  }
+  .track { animation: none; }
 }
-

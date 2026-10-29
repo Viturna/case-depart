@@ -1,27 +1,15 @@
 import type { Metadata } from 'next';
-import { Archivo, Inter, IBM_Plex_Mono } from 'next/font/google';
+import { Anton } from 'next/font/google';
 import '@/styles/globals.css';
 import { CartProvider } from '@/context/CartContext';
 import CartDrawer from '@/components/CartDrawer';
+import Reveal from '@/components/Reveal';
+import Preloader from '@/components/Preloader';
 
-const archivo = Archivo({
+const anton = Anton({
   subsets: ['latin'],
-  weight: ['700', '800', '900'],
-  variable: '--font-archivo',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-plex-mono',
+  weight: '400',
+  variable: '--font-anton',
   display: 'swap',
 });
 
@@ -36,12 +24,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${archivo.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
+    <html lang="fr" className={anton.variable} suppressHydrationWarning>
+      <head>
+        {/* Avant le premier rendu : active les animations sauf en mouvement réduit,
+            et saute le preloader s'il a déjà été vu dans la session. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(h){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('js-anim');try{if(sessionStorage.getItem('cd-pre'))h.classList.add('no-pre')}catch(e){}})(document.documentElement)`,
+          }}
+        />
+        {/* BDO Grotesk absente de next/font en v14 : chargée depuis Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=BDO+Grotesk:wght@400;500&display=swap"
+        />
+      </head>
       <body>
+        <Preloader />
         <CartProvider>
           {children}
           <CartDrawer />
         </CartProvider>
+        <Reveal />
       </body>
     </html>
   );

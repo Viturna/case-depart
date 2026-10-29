@@ -1,101 +1,68 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './Footer.module.css';
+import Split from './Split';
+
+const cols = [
+  {
+    title: 'Carnets',
+    links: [
+      { label: 'Tous les carnets', href: '/carnets' },
+      { label: 'Carnet de Noël', href: '/carnets/carnet-noel' },
+      { label: "Carnet d'Halloween", href: '/carnets/carnet-halloween' },
+      { label: 'La Collection', href: '/carnets/la-collection' },
+    ],
+  },
+  {
+    title: 'Jouer',
+    links: [
+      { label: 'Grille du jour', href: '/jouer' },
+      { label: 'Pass Podium', href: '/jouer#podium' },
+      { label: 'Les 3 niveaux', href: '/#niveaux' },
+    ],
+  },
+  {
+    title: 'Aide',
+    links: [
+      { label: 'Questions fréquentes', href: '/#faq' },
+      { label: 'Styleguide', href: '/styleguide' },
+    ],
+  },
+];
 
 export default function Footer() {
   return (
-    <footer className={styles.footer} role="contentinfo">
-      <div className={styles.inner}>
-        {/* 4 Colonnes séparées par des filets sable */}
-        <div className={styles.columnsGrid}>
-          <div className={styles.col}>
-            <span className={styles.colTitle}>01 / LES CARNETS</span>
-            <ul className={styles.linkList}>
-              <li className={styles.linkItem}>
-                <Link href="/carnets/carnet-noel">Carnet de Noël (Nouveau)</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/carnets/carnet-halloween">Carnet Halloween</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/carnets/tour-de-l-annee">Tour de l’année (Multi)</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/carnets/la-collection">La Collection intégrale</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/carnets">Tous les carnets PDF</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.col}>
-            <span className={styles.colTitle}>02 / COMPÉTITION</span>
-            <ul className={styles.linkList}>
-              <li className={styles.linkItem}>
-                <Link href="/jouer">Grille du jour en ligne</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/pass-podium">Pass Podium (Abonnement)</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/jouer#classement">Classement officiel</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/jouer#chrono">Le chrono de course</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.col}>
-            <span className={styles.colTitle}>03 / LIGNE DE DÉPART</span>
-            <ul className={styles.linkList}>
-              <li className={styles.linkItem}>
-                <Link href="/#niveaux">Échauffement › (Facile)</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/#niveaux">Sprint ›› (Moyen)</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/#niveaux">Marathon ››› (Difficile)</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/#ravitaillement">Les pauses Ravitaillement</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.col}>
-            <span className={styles.colTitle}>04 / ATELIER</span>
-            <p className={styles.textSmall}>
-              Des sudokus pensés pour le crayon, l’impression nette et la compétition en ligne.
-            </p>
-            <p className={styles.textSmall}>
-              Contact complice : <a href="mailto:contact@viturna.fr" style={{ color: 'var(--sable)', textDecoration: 'underline' }}>contact@viturna.fr</a>
-            </p>
-          </div>
+    <footer className={styles.footer}>
+      <div className={`container ${styles.grid}`}>
+        <div className={styles.col}>
+          <p className="label muted">Infos pratiques</p>
+          <p>PDF envoyé par e-mail juste après le paiement.</p>
+          <p>Impression A4 ou A5 livret, noir et blanc OK.</p>
+          <p>
+            Une question ? <a className={styles.mail} href="mailto:contact@viturna.fr">contact@viturna.fr</a>
+          </p>
         </div>
+        {cols.map((c) => (
+          <nav key={c.title} className={styles.col} aria-label={c.title}>
+            <p className="label muted">{c.title}</p>
+            <ul className={styles.list}>
+              {c.links.map((l) => (
+                <li key={l.href}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
 
-        {/* Mot CASE DÉPART en géant */}
-        <div className={styles.megaWordmark}>
-          <p className={styles.megaTitle}>CASE DÉPART</p>
+      <div className="container">
+        <div className={styles.fit} aria-hidden="true">
+          <Split className={styles.wordmark} lines={['Case Départ']} />
         </div>
-
-        {/* Ligne mono inférieure */}
-        <div className={styles.bottomBar}>
-          <div>© 2026 CASE DÉPART · TOUS DROITS RÉSERVÉS</div>
-          <div className={styles.bottomMotto}>
-            <span>ÉCHAUFFEMENT</span>
-            <span>·</span>
-            <span>SPRINT</span>
-            <span>·</span>
-            <span>MARATHON</span>
-            <span>·</span>
-            <span>FIN DE GRILLE</span>
-          </div>
+        <div className={`label ${styles.bottom}`}>
+          <span>© 2026 Case Départ</span>
+          <span>Échauffement · Sprint · Marathon</span>
         </div>
       </div>
     </footer>
   );
 }
-

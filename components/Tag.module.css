@@ -1,0 +1,8 @@
+.tag {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  white-space: nowrap;
+}

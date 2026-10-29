@@ -1,0 +1,24 @@
+.pre {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--nuit);
+  color: var(--dore);
+  padding: var(--gutter);
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--dur-curtain) var(--ease-out);
+}
+
+:global(.js-anim:not(.no-pre)) .pre { display: flex; }
+
+.done { transform: translateY(-100%); pointer-events: none; }
+
+.count {
+  font-family: var(--font-title);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  font-variant-numeric: tabular-nums;
+  align-self: flex-end;
+}

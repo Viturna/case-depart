@@ -1,0 +1,72 @@
+.card { display: flex; flex-direction: column; }
+
+.link { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.visual {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-4);
+  overflow: hidden;
+}
+
+.grid {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: auto;
+  aspect-ratio: 1;
+  opacity: 0.35;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.link:hover .grid { opacity: 0.6; }
+
+.cover {
+  position: relative;
+  font-family: var(--font-title);
+  font-weight: var(--weight-title);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-title);
+  line-height: var(--lh-tight);
+  font-size: var(--fs-cover);
+  overflow-wrap: break-word;
+}
+
+.badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  background: var(--dore);
+  color: var(--noir);
+  font-size: var(--fs-label);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-s);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.name { font-size: var(--fs-body); font-weight: var(--weight-medium); }
+.link:hover .name { text-decoration: underline; text-underline-offset: var(--space-1); }
+.price { font-size: var(--fs-body); }
+.meta { font-size: var(--fs-small); }
+
+.soon .price { color: var(--gris-texte); font-size: var(--fs-small); }
+
+/* Révélation du visuel par rideau quand la carte entre à l'écran (wrapper [data-reveal]) */
+.visual { transition: clip-path var(--dur-curtain) var(--ease-out); }
+.grid { transform-origin: 50% 50%; }
+:global(.js-anim) :global([data-reveal]:not(.is-visible)) .visual { clip-path: inset(100% 0 0 0); }
+:global(.js-anim) :global([data-reveal]:not(.is-visible)) .grid { transform: scale(1.15); }
+.grid { transition: opacity var(--dur-fast) var(--ease), transform var(--dur-curtain) var(--ease-out); }

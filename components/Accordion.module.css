@@ -1,90 +1,35 @@
-.accordion {
-  border-top: var(--border-1);
-  width: 100%;
-}
+.accordion { border-top: var(--line); width: 100%; }
 
-.item {
-  border-bottom: var(--border-1);
-  transition: background-color 0.15s ease;
-  background-color: var(--sable);
-}
-
-.itemOpen {
-  background-color: var(--rose);
-}
+.item { border-bottom: var(--line); }
 
 .headerButton {
   width: 100%;
-  padding: 24px 32px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
   text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--sapin);
 }
 
-.headerLeft {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-grow: 1;
-}
+.headerButton:hover .question { color: var(--nuit); }
+
+.headerLeft { display: flex; align-items: baseline; gap: var(--space-4); }
 
 .indexMono {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--sapin);
-  flex-shrink: 0;
+  font-size: var(--fs-label);
+  color: var(--gris-texte);
+  font-variant-numeric: tabular-nums;
 }
 
-.question {
-  font-family: var(--font-title);
-  font-size: 20px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
-  color: var(--sapin);
-  margin: 0;
-}
+.question { font-size: var(--fs-body); font-weight: var(--weight-medium); transition: color var(--dur-fast) var(--ease); }
 
-.toggleSymbol {
-  font-family: var(--font-mono);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--sapin);
-  flex-shrink: 0;
-  line-height: 1;
-}
+.toggleSymbol { font-size: var(--fs-h3); line-height: 1; color: var(--nuit); }
+
 
 .content {
-  padding: 0 32px 28px 70px;
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--sapin);
+  padding: 0 0 var(--space-5) var(--space-7);
+  max-width: 60ch;
+  font-size: var(--fs-small);
+  color: var(--gris-texte);
 }
-
-@media (max-width: 640px) {
-  .headerButton {
-    padding: 20px 16px;
-    gap: 16px;
-  }
-  .headerLeft {
-    gap: 16px;
-  }
-  .question {
-    font-size: 17px;
-  }
-  .content {
-    padding: 0 16px 20px 16px;
-    font-size: 15px;
-  }
-}
-

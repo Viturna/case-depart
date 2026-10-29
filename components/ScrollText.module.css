@@ -1,0 +1,10 @@
+.text {
+  font-size: var(--fs-statement);
+  font-weight: var(--weight-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-statement);
+  max-width: 28ch;
+}
+
+:global(.js-anim) .text span { opacity: var(--dim); transition: opacity var(--dur-fast) linear; }
+:global(.js-anim) .text span.lit { opacity: 1; }

@@ -1,0 +1,260 @@
+{
+  "noel": {
+    "slug": "noel",
+    "nom": "Noël",
+    "titre": "Carnet de Noël",
+    "sousTitre": "Édition 2026",
+    "annee": 2026,
+    "couleurs": {
+      "fond": "#EFDEC2",
+      "principale": "#315A54",
+      "secondaire": "#9F1014",
+      "accent": "#FEC2DC"
+    },
+    "illustrations": {
+      "couverture": "noel-sapin",
+      "coloriage": "noel-sapin"
+    },
+    "phraseCouverture": "Trente grilles avant le réveillon. Le sapin attendra.",
+    "intro": "Un carnet pour tenir jusqu'au 24. Tu commences doucement, tu accélères, tu finis par une grille qui ne te fera aucun cadeau.",
+    "mentionRavitaillements": "Deux pauses : un coloriage après l'Échauffement, un tirage après le Sprint. Le chrono s'arrête. Pas toi.",
+    "coloriage": {
+      "titre": "Le sapin à colorier",
+      "consigne": "Quatre couleurs, pas une de plus. Colorie les cases vides, respire, reviens à la grille quand tu veux."
+    },
+    "tirage": {
+      "titre": "Ton année à venir",
+      "consigne": "Repère la case étoilée de la dernière grille Sprint. Le chiffre que tu y écris est ton chiffre clé. Lis le présage qui porte le même numéro.",
+      "textes": [
+        "Janvier démarre sur une case vide. Remplis-la sans réfléchir, tu corrigeras en février.",
+        "Février te mettra face à un 9 récalcitrant. Regarde ailleurs : la solution est dans la ligne d'à côté.",
+        "Mars sera une paire nue. Deux possibilités, une seule tient debout.",
+        "Avril sentira la gomme. C'est bon signe : tu progresses.",
+        "Mai te réserve un chiffre caché. Il ne se voit pas, mais il t'attend.",
+        "Juin sera rapide. Trop rapide, peut-être. Pose le crayon avant de vérifier.",
+        "Juillet te proposera un raccourci. Refuse. Le chemin long est le seul qui compte.",
+        "Août sera silencieux. Profites-en pour remplir une grille sans chrono.",
+        "Décembre revient toujours à la case départ. Cette fois, tu sauras quoi en faire."
+      ]
+    },
+    "citation": {
+      "texte": "Le sapin n'a jamais rempli une grille. Il préfère regarder.",
+      "auteur": "Le 9 de la case I9"
+    }
+  },
+  "halloween": {
+    "slug": "halloween",
+    "nom": "Halloween",
+    "titre": "Carnet d'Halloween",
+    "sousTitre": "Édition 2026",
+    "annee": 2026,
+    "couleurs": {
+      "fond": "#EFDEC2",
+      "principale": "#315A54",
+      "secondaire": "#9F1014",
+      "accent": "#FEC2DC"
+    },
+    "illustrations": {
+      "couverture": "grille-generique",
+      "coloriage": "grille-generique"
+    },
+    "phraseCouverture": "La nuit tombe. Les cases aussi.",
+    "intro": "Un carnet pour les soirs où le soleil se couche trop tôt. Trois niveaux, deux pauses, aucune excuse.",
+    "mentionRavitaillements": "Un coloriage après l'Échauffement, un tirage après le Sprint. De quoi survivre à la nuit.",
+    "coloriage": {
+      "titre": "La citrouille à colorier",
+      "consigne": "Colorie les cases, laisse les filets respirer. Quatre couleurs maximum, comme un sort bien dosé."
+    },
+    "tirage": {
+      "titre": "Ton destin de la nuit",
+      "consigne": "Repère la case étoilée de la dernière grille Sprint. Le chiffre que tu y écris est ton chiffre clé. Lis le présage qui porte le même numéro.",
+      "textes": [
+        "Tu es le fantôme : tu apparais, tu disparais, personne ne te voit arriver.",
+        "Tu es la citrouille : creuse la question, la lumière est à l'intérieur.",
+        "Tu es le chat noir : trois pas à gauche, un regard, et la grille se retourne.",
+        "Tu es la chauve-souris : tu voles mieux quand tu lâches la ligne.",
+        "Tu es le château : solide en façade, un peu vide à l'intérieur. Ça arrive.",
+        "Tu es la sorcière : ton remède est dans le chaudron, pas dans la notice.",
+        "Tu es le zombie : tu avances lentement, mais tu ne t'arrêtes jamais.",
+        "Tu es la momie : tu as tout le temps, même celui qui est déjà passé.",
+        "Tu es la lune : tu éclaires sans te presser. La nuit t'appartient."
+      ]
+    },
+    "citation": {
+      "texte": "Les fantômes n'ont pas peur du vide. Ils y habitent.",
+      "auteur": "La gomme"
+    }
+  },
+  "saint-valentin": {
+    "slug": "saint-valentin",
+    "nom": "Saint-Valentin",
+    "titre": "Carnet de Saint-Valentin",
+    "sousTitre": "Édition 2026",
+    "annee": 2026,
+    "couleurs": {
+      "fond": "#EFDEC2",
+      "principale": "#315A54",
+      "secondaire": "#9F1014",
+      "accent": "#FEC2DC"
+    },
+    "illustrations": {
+      "couverture": "grille-generique",
+      "coloriage": "grille-generique"
+    },
+    "phraseCouverture": "Deux crayons, une grille, aucun compromis.",
+    "intro": "Un carnet à faire à deux, ou seul si l'autre préfère regarder. Les grilles ne jugent pas.",
+    "mentionRavitaillements": "Un coloriage après l'Échauffement, un tirage après le Sprint. À partager sans se disputer.",
+    "coloriage": {
+      "titre": "Le cœur en cases",
+      "consigne": "Colorie les cases du cœur. Si vous êtes deux, chacun choisit deux couleurs et assume."
+    },
+    "tirage": {
+      "titre": "Compatibilité",
+      "consigne": "Repère la case étoilée de la dernière grille Sprint. Le chiffre que tu y écris est votre chiffre clé. Lisez le présage qui porte le même numéro.",
+      "textes": [
+        "Vous êtes le duo qui se dispute sur la première case, puis se réconcilie sur la dernière.",
+        "Vous êtes la paire nue : deux, et personne d'autre ne peut entrer.",
+        "Vous êtes les amoureux du 6 et du 9 : même forme, sens opposé, complément parfaits.",
+        "Vous êtes la ligne et la colonne : vous vous croisez sans jamais vous perdre.",
+        "Vous êtes le bloc 3×3 : proches, un peu étouffants, mais solides.",
+        "Vous êtes la case vide : tout est possible, il faut juste oser écrire.",
+        "Vous êtes le crayon et la gomme : l'un propose, l'autre pardonne.",
+        "Vous êtes le chrono : ensemble, vous battez des records. Séparés, vous stressez.",
+        "Vous êtes le 9 : à deux, vous fermez la grille."
+      ]
+    },
+    "citation": {
+      "texte": "L'amour, c'est accepter que l'autre écrive un 7 là où tu voulais un 3.",
+      "auteur": "Le crayon"
+    }
+  },
+  "paques": {
+    "slug": "paques",
+    "nom": "Pâques",
+    "titre": "Carnet de Pâques",
+    "sousTitre": "Édition 2026",
+    "annee": 2026,
+    "couleurs": {
+      "fond": "#EFDEC2",
+      "principale": "#315A54",
+      "secondaire": "#9F1014",
+      "accent": "#FEC2DC"
+    },
+    "illustrations": {
+      "couverture": "grille-generique",
+      "coloriage": "grille-generique"
+    },
+    "phraseCouverture": "Cherche les œufs. Trouve les chiffres.",
+    "intro": "Un carnet pour le long week-end. Tu casses des œufs, tu remplis des cases, tu recommences.",
+    "mentionRavitaillements": "Un coloriage après l'Échauffement, un tirage après le Sprint. La chasse est ouverte.",
+    "coloriage": {
+      "titre": "L'œuf mosaïque",
+      "consigne": "Colorie chaque zone sans déborder. Quatre couleurs, comme les quatre coins de la grille."
+    },
+    "tirage": {
+      "titre": "Chasse au destin",
+      "consigne": "Repère la case étoilée de la dernière grille Sprint. Le chiffre que tu y écris est ton chiffre clé. Lis le présage qui porte le même numéro.",
+      "textes": [
+        "L'œuf en chocolat : tu caches bien tes talents, peut-être trop.",
+        "L'œuf de Pâques : tu es plein de promesses, il suffit de casser la coquille.",
+        "Le lapin : tu bondis de case en case, parfois sans regarder où tu atterris.",
+        "Le panier : tu portes les autres avant de te porter toi-même.",
+        "La cloche : on t'entend avant de te voir. Assume.",
+        "Le jardin : tu pousses lentement, mais tu tiens bon.",
+        "Le soleil : tu réchauffes la pièce sans faire de bruit.",
+        "La pluie : tu arrives sans prévenir, tu repars en laissant une odeur de terre.",
+        "Le chemin : tu n'es pas encore arrivé, et c'est très bien comme ça."
+      ]
+    },
+    "citation": {
+      "texte": "Le lapin ne pond pas. Il livre, c'est différent.",
+      "auteur": "La case départ"
+    }
+  },
+  "fete-musique": {
+    "slug": "fete-musique",
+    "nom": "Fête de la musique",
+    "titre": "Carnet de la Fête de la musique",
+    "sousTitre": "Édition 2026",
+    "annee": 2026,
+    "couleurs": {
+      "fond": "#EFDEC2",
+      "principale": "#315A54",
+      "secondaire": "#9F1014",
+      "accent": "#FEC2DC"
+    },
+    "illustrations": {
+      "couverture": "grille-generique",
+      "coloriage": "grille-generique"
+    },
+    "phraseCouverture": "Le sol est gratuit. Le solo aussi.",
+    "intro": "Un carnet pour les soirées qui commencent tôt et finissent sur une grille. Trois niveaux, deux pauses, un rappel.",
+    "mentionRavitaillements": "Un coloriage après l'Échauffement, un tirage après le Sprint. Le concert continue.",
+    "coloriage": {
+      "titre": "La portée à colorier",
+      "consigne": "Colorie les notes, garde les filets visibles. Quatre couleurs, comme une bonne setlist."
+    },
+    "tirage": {
+      "titre": "Quel instrument es-tu ?",
+      "consigne": "Repère la case étoilée de la dernière grille Sprint. Le chiffre que tu y écris est ton chiffre clé. Lis le présage qui porte le même numéro.",
+      "textes": [
+        "Tu es la batterie : tu donnes le tempo, même quand personne ne t'écoute.",
+        "Tu es la guitare : trois accords suffisent pour retourner une soirée.",
+        "Tu es le piano : tu veux tout jouer, mains gauche et droite.",
+        "Tu es la contrebasse : discret, mais sans toi le groupe tombe.",
+        "Tu es la trompette : tu montes haut, tu assumes le solo.",
+        "Tu es le violon : précis, sensible, un peu dramatique.",
+        "Tu es la flûte : léger, aérien, tu passes entre les lignes.",
+        "Tu es le saxophone : tu prends ton temps, et tout le monde attend.",
+        "Tu es le triangle : un seul coup au bon moment, et c'est parfait."
+      ]
+    },
+    "citation": {
+      "texte": "Le silence aussi est une note. Personne ne veut l'entendre.",
+      "auteur": "Le chrono"
+    }
+  },
+  "multi-theme": {
+    "slug": "multi-theme",
+    "nom": "Tour de l'année",
+    "titre": "Carnet Tour de l'année",
+    "sousTitre": "Édition 2026",
+    "annee": 2026,
+    "couleurs": {
+      "fond": "#EFDEC2",
+      "principale": "#315A54",
+      "secondaire": "#9F1014",
+      "accent": "#FEC2DC"
+    },
+    "illustrations": {
+      "couverture": "grille-generique",
+      "coloriage": "grille-generique"
+    },
+    "phraseCouverture": "Cinq thèmes, une année, aucune ligne droite.",
+    "intro": "Un carnet qui traverse l'année : cinq escales, six grilles par escale, une pause à chaque étape.",
+    "mentionRavitaillements": "Un Ravitaillement par thème. Colorie, respire, repars.",
+    "coloriage": {
+      "titre": "La grille à colorier",
+      "consigne": "Colorie les cases comme tu veux. Les filets sont là pour te rappeler l'ordre."
+    },
+    "tirage": {
+      "titre": "Le tirage du voyage",
+      "consigne": "Repère la case étoilée de la dernière grille. Le chiffre que tu y écris est ton chiffre clé. Lis le présage qui porte le même numéro.",
+      "textes": [
+        "Tu pars à gauche. Tu reviendras par la droite, chargé de cases.",
+        "Tu trouveras un raccourci. Il ne mènera nulle part, mais tu auras vu du pays.",
+        "Tu feras une pause. Elle durera plus longtemps que prévu. C'est le but.",
+        "Tu croiseras un chiffre que tu n'aimes pas. Apprends à le supporter.",
+        "Tu perdras une gomme. Tu en retrouveras deux.",
+        "Tu rempliras une grille sans faute. Personne ne te croira.",
+        "Tu voudras tout finir d'un coup. Le carnet te dira non.",
+        "Tu reviendras sur une case. Elle t'attendait.",
+        "Tu arriveras au bout. La ligne d'arrivée est une ligne, pas un mur."
+      ]
+    },
+    "citation": {
+      "texte": "Un tour de l'année, c'est long. Heureusement, il y a des cases.",
+      "auteur": "Le 1 de la case A1"
+    }
+  }
+}

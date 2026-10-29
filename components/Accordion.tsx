@@ -35,7 +35,7 @@ export default function Accordion({
         return (
           <div
             key={item.id || index}
-            className={`${styles.item} ${isOpen ? styles.itemOpen : ''}`}
+            className={styles.item}
           >
             <button
               type="button"
@@ -45,7 +45,7 @@ export default function Accordion({
             >
               <div className={styles.headerLeft}>
                 <span className={styles.indexMono}>{qIndex}</span>
-                <h4 className={styles.question}>{item.question}</h4>
+                <span className={styles.question}>{item.question}</span>
               </div>
               <span className={styles.toggleSymbol} aria-hidden="true">
                 {isOpen ? '−' : '+'}

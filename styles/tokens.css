@@ -1,45 +1,116 @@
+/* Tokens Case Départ — voir design.md. Seule source de valeurs du site. */
 :root {
-  /* Palette stricte DESIGN.md (Direction A) */
-  --sable: #EFDEC2;
-  --sapin: #315A54;
-  --brique: #9F1014;
-  --rose: #FEC2DC;
+  /* Marque */
+  --blanc: #FFFFFF;
+  --noir: #161616;
+  --nuit: #041735;
+  --dore: #E8D48A;
+  --gris: #EFEFEF;
+  --gris-texte: #6B6B6B;
+  --erreur: #B42318;
 
-  /* Aliases fonctionnels */
-  --color-bg: var(--sable);
-  --color-text: var(--sapin);
-  --color-border: var(--sapin);
-  --color-primary: var(--brique);
-  --color-accent: var(--rose);
+  /* Thèmes : fond + encre posée dessus */
+  --theme-halloween: #E8631C;
+  --theme-halloween-ink: var(--noir);
+  --theme-muertos: #6A2C8A;
+  --theme-muertos-ink: var(--blanc);
+  --theme-noel: #1F6B45;
+  --theme-noel-ink: var(--blanc);
+  --theme-valentin: #A3134F;
+  --theme-valentin-ink: var(--blanc);
+  --theme-paques: #9BD17E;
+  --theme-paques-ink: var(--noir);
+  --theme-multi: var(--gris);
+  --theme-multi-ink: var(--nuit);
 
-  /* Filets (1px partout, 2px pour sudoku et contour grille) */
-  --border-1: 1px solid var(--sapin);
-  --border-2: 2px solid var(--sapin);
-  --border-sable-1: 1px solid var(--sable);
-  --border-sable-2: 2px solid var(--sable);
+  /* Typo */
+  --font-title: var(--font-anton), 'Anton', 'Impact', sans-serif;
+  --font-body: 'BDO Grotesk', system-ui, sans-serif;
+  --fs-display: clamp(3.5rem, 15vw, 15rem);
+  --wordmark-ratio: 4.75;
+  --fs-h1: clamp(4rem, 16vw, 14rem);
+  --fs-h2: clamp(2.75rem, 7vw, 6.5rem);
+  --fs-cover: clamp(1.5rem, 4vw, 2.75rem);
+  --fs-h3: clamp(1.5rem, 2.4vw, 2rem);
+  --fs-statement: clamp(1.5rem, 4vw, 3.25rem);
+  --fs-cell: clamp(1.25rem, 4.5vw, 1.75rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+  --lh-tight: 1.05;
+  --lh-body: 1.5;
+  --lh-snug: 1.15;
+  --tracking-statement: -0.02em;
+  --tracking-title: -0.01em;
+  --tracking-label: 0.08em;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-title: 400;
 
-  /* Rayons : 0 partout sauf badges ronds */
-  --radius-base: 0px;
+  /* Espaces (base 8px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 160px;
+  --gutter: var(--space-4);
+  --section-y: var(--space-8);
+  --container: 1440px;
+  --measure-wide: 960px;
+  --board: 560px;
+  --header-h: 56px;
+  --control-s: 36px;
+  --control-m: 44px;
+  --control-l: 52px;
+
+  /* Filets, rayons */
+  --line: 1px solid var(--noir);
+  --line-soft: 1px solid var(--gris);
+  --line-strong: 2px solid var(--noir);
+  --radius-0: 0;
+  --radius-s: 2px;
+  --radius-full: 50%;
+  --focus: 2px solid var(--nuit);
+  --focus-offset: 2px;
+
+  /* Mouvement */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-split: 900ms;
+  --dur-curtain: 900ms;
+  --stagger: 28ms;
+  --dim: 0.2;
+  --dur-fast: 160ms;
+  --dur-base: 600ms;
+  --dur-marquee: 40s;
+  --reveal-shift: 8px;
+
+  /* shortcut: alias de l'ancienne DA, gardés tant que catalogue et fiche
+     produit ne sont pas refaits. À supprimer après la page 3. */
+  --sable: var(--blanc);
+  --rose: var(--dore);
+  --vert: var(--nuit);
+  --sapin: var(--nuit);
+  --brique: var(--nuit);
+  --border-1: 1px solid var(--nuit);
+  --border-2: 2px solid var(--nuit);
+  --border-sable-1: 1px solid var(--blanc);
+  --border-sable-2: 2px solid var(--blanc);
+  --radius-base: 0;
   --radius-round: 50%;
-
-  /* Largeur de référence : 1440px max */
-  --container-max: 1440px;
-
-  /* Unité de base : 8px */
-  --space-8: 8px;
-  --space-12: 12px;
-  --space-16: 16px;
-  --space-24: 24px;
-  --space-32: 32px;
-  --space-40: 40px;
-  --space-48: 48px;
-  --space-56: 56px;
-  --space-64: 64px;
-  --space-72: 72px;
-
-  /* Typographie */
-  --font-title: var(--font-archivo), 'Archivo', sans-serif;
-  --font-body: var(--font-inter), 'Inter', sans-serif;
-  --font-mono: var(--font-plex-mono), 'IBM Plex Mono', monospace;
+  --container-max: var(--container);
+  --font-mono: var(--font-body);
 }
 
+@media (min-width: 768px) {
+  :root { --gutter: var(--space-5); --section-y: var(--space-8); --header-h: 64px; }
+}
+
+@media (min-width: 1440px) {
+  :root { --gutter: var(--space-7); --section-y: var(--space-9); }
+}

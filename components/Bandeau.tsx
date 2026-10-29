@@ -1,43 +1,23 @@
 import React from 'react';
 import styles from './Bandeau.module.css';
 
-interface BandeauProps {
-  items?: string[];
-}
+const defaultItems = ['Halloween', 'Noël', 'Saint-Valentin', 'Pâques', 'Día de los Muertos'];
 
-const defaultItems = [
-  'NOUVEAU CARNET DE NOËL DISPONIBLE',
-  '30 GRILLES + 1 ARRIVÉE',
-  'TÉLÉCHARGEMENT IMMÉDIAT EN PDF',
-  'FORMATS A4 ET A5 LIVRET INCLUS',
-  'LE STARTER EST 100% OFFERT',
-  'CHRONO ET CLASSEMENTS EN LIGNE',
-  'IMPRESSION NOIR & BLANC OPTIMISÉE',
-];
-
-export default function Bandeau({ items = defaultItems }: BandeauProps) {
+// Marquee en boucle : la liste est doublée pour un défilement sans couture.
+export default function Bandeau({ items = defaultItems }: { items?: string[] }) {
+  const group = (hidden: boolean) => (
+    <ul className={styles.group} aria-hidden={hidden || undefined}>
+      {items.map((t) => (
+        <li key={t} className={styles.item}>{t}<span className={styles.dot} aria-hidden="true">·</span></li>
+      ))}
+    </ul>
+  );
   return (
-    <div className={styles.bandeau} role="region" aria-label="Annonces et actualités">
+    <div className={styles.marquee} role="region" aria-label="Thèmes des carnets">
       <div className={styles.track}>
-        {/* Doubled for seamless loop */}
-        <div className={styles.itemGroup}>
-          {items.map((text, idx) => (
-            <React.Fragment key={`b1-${idx}`}>
-              <span className={styles.item}>{text}</span>
-              <span className={styles.separator} aria-hidden="true">/</span>
-            </React.Fragment>
-          ))}
-        </div>
-        <div className={styles.itemGroup} aria-hidden="true">
-          {items.map((text, idx) => (
-            <React.Fragment key={`b2-${idx}`}>
-              <span className={styles.item}>{text}</span>
-              <span className={styles.separator}>/</span>
-            </React.Fragment>
-          ))}
-        </div>
+        {group(false)}
+        {group(true)}
       </div>
     </div>
   );
 }
-

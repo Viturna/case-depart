@@ -1,155 +1,70 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 90;
-  background-color: var(--sapin);
-  color: var(--sable);
-  border-bottom: var(--border-sable-1);
-  width: 100%;
+  z-index: 50;
+  background: var(--blanc);
+  border-bottom: var(--line);
 }
 
 .inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
-  height: 64px;
+  gap: var(--space-5);
+  min-height: var(--header-h);
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 0 32px;
-  border-right: var(--border-sable-1);
-  color: var(--sable);
-  text-decoration: none;
   font-family: var(--font-title);
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: -0.015em;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  font-weight: var(--weight-title);
+  font-size: var(--fs-body);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-title);
+  white-space: nowrap;
 }
 
-.brand:hover {
-  background-color: var(--rose);
-  color: var(--sapin);
+.right { display: flex; align-items: center; gap: var(--space-4); }
+
+.cart, .toggle, .link {
+  font-size: var(--fs-label);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  min-height: var(--control-m);
+  display: inline-flex;
+  align-items: center;
 }
 
+.cart:hover, .toggle:hover, .link:hover { color: var(--nuit); }
+
+.num { color: var(--gris-texte); margin-right: var(--space-2); font-variant-numeric: tabular-nums; }
+
+.link[aria-current='page'] { color: var(--nuit); }
+.link[aria-current='page'] .num { color: var(--nuit); }
+
+/* Mobile : nav en panneau sous le header */
 .nav {
-  display: flex;
-  align-items: stretch;
-  flex-grow: 1;
-}
-
-.navLink {
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  border-right: var(--border-sable-1);
-  color: var(--sable);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transition: background-color 0.15s ease, color 0.15s ease;
-  white-space: nowrap;
-}
-
-.navLink:hover {
-  background-color: var(--rose);
-  color: var(--sapin);
-}
-
-.navLinkActive {
-  background-color: var(--sable);
-  color: var(--sapin);
-}
-
-.rightGroup {
-  display: flex;
-  align-items: stretch;
-}
-
-.accountLink, .cartLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 24px;
-  border-left: var(--border-sable-1);
-  color: var(--sable);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transition: background-color 0.15s ease, color 0.15s ease;
-  white-space: nowrap;
-}
-
-.accountLink:hover, .cartLink:hover {
-  background-color: var(--rose);
-  color: var(--sapin);
-}
-
-.cartBadge {
-  background-color: var(--brique);
-  color: var(--sable);
-  padding: 2px 6px;
-  font-size: 11px;
-}
-
-/* Menu Mobile */
-.mobileToggle {
   display: none;
-  align-items: center;
-  padding: 0 20px;
-  background: none;
-  border: none;
-  border-left: var(--border-sable-1);
-  color: var(--sable);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  cursor: pointer;
-}
-
-.mobileMenu {
-  display: none;
+  position: absolute;
+  inset: 100% 0 auto 0;
   flex-direction: column;
-  background-color: var(--sapin);
-  border-bottom: var(--border-sable-1);
+  background: var(--blanc);
+  border-bottom: var(--line);
+  padding: var(--space-2) var(--gutter) var(--space-4);
 }
+.navOpen { display: flex; }
+.navOpen .link { border-bottom: var(--line-soft); font-size: var(--fs-small); }
 
-.mobileMenuOpen {
-  display: flex;
-}
-
-.mobileLink {
-  padding: 16px 24px;
-  border-top: var(--border-sable-1);
-  color: var(--sable);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.mobileLink:hover {
-  background-color: var(--rose);
-  color: var(--sapin);
-}
-
-@media (max-width: 1024px) {
+@media (min-width: 768px) {
   .nav {
-    display: none;
-  }
-  .mobileToggle {
     display: flex;
+    position: static;
+    flex-direction: row;
+    gap: var(--space-6);
+    padding: 0;
+    border: 0;
+    background: none;
   }
+  .toggle { display: none; }
+  .link[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--nuit); }
 }
-

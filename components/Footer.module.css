@@ -1,133 +1,57 @@
 .footer {
-  background-color: var(--sapin);
-  color: var(--sable);
-  border-top: var(--border-1);
-  width: 100%;
-}
-
-.inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
-}
-
-.columnsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-bottom: var(--border-sable-1);
-}
-
-.col {
-  padding: 48px 32px;
-  border-right: var(--border-sable-1);
-  display: flex;
-  flex-direction: column;
-}
-
-.col:last-child {
-  border-right: none;
-}
-
-.colTitle {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--sable);
-  margin-bottom: 24px;
-}
-
-.linkList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.linkItem a {
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--sable);
-  text-decoration: none;
-  transition: color 0.1s ease;
-}
-
-.linkItem a:hover {
-  color: var(--rose);
-}
-
-.textSmall {
-  font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--sable);
-  margin-bottom: 16px;
-}
-
-.megaWordmark {
-  padding: 40px 32px 24px 32px;
-  border-bottom: var(--border-sable-1);
-  text-align: center;
+  border-top: var(--line);
+  padding-top: var(--space-8);
+  background: var(--blanc);
   overflow: hidden;
 }
 
-.megaTitle {
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6) var(--space-5);
+  font-size: var(--fs-small);
+}
+
+.col { display: flex; flex-direction: column; gap: var(--space-2); }
+.col:first-child { grid-column: 1 / -1; }
+
+.list { list-style: none; display: flex; flex-direction: column; gap: var(--space-1); }
+
+.link, .mail { background-image: linear-gradient(var(--dore), var(--dore)); background-size: 0 100%; background-repeat: no-repeat; transition: background-size var(--dur-fast) var(--ease); }
+.link:hover, .mail:hover { background-size: 100% 100%; }
+.mail { text-decoration: underline; }
+
+/* Wordmark pleine largeur : la taille suit la largeur de l'écran */
+.wordmark {
   font-family: var(--font-title);
-  font-weight: 900;
+  font-weight: var(--weight-title);
   text-transform: uppercase;
-  font-size: clamp(48px, 11vw, 154px);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  color: var(--sable);
-  margin: 0;
-  user-select: none;
+  letter-spacing: var(--tracking-title);
+  line-height: var(--lh-tight);
+  font-size: calc(100cqw / var(--wordmark-ratio));
   white-space: nowrap;
+  color: var(--nuit);
+  cursor: default;
 }
 
-.bottomBar {
-  padding: 16px 32px;
+/* La taille suit la largeur du conteneur, comme le nom géant de Dex Harlan */
+.fit { container-type: inline-size; margin-top: var(--space-8); }
+
+/* Survol : la lettre s'étire depuis sa ligne de base */
+.wordmark :global(.split-char):hover { transform: scaleY(1.18); transition-delay: 0s; transition-duration: var(--dur-base); }
+
+
+.bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--sable);
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: var(--space-4);
+  border-top: var(--line);
+  margin-top: var(--space-4);
 }
 
-.bottomMotto {
-  display: flex;
-  gap: 12px;
+@media (min-width: 768px) {
+  .grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  .col:first-child { grid-column: auto; }
 }
-
-@media (max-width: 900px) {
-  .columnsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .col:nth-child(2) {
-    border-right: none;
-  }
-  .col:nth-child(1), .col:nth-child(2) {
-    border-bottom: var(--border-sable-1);
-  }
-}
-
-@media (max-width: 600px) {
-  .columnsGrid {
-    grid-template-columns: 1fr;
-  }
-  .col {
-    border-right: none;
-    border-bottom: var(--border-sable-1);
-    padding: 32px 20px;
-  }
-  .bottomBar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-

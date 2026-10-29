@@ -2,83 +2,40 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-weight: 600;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-small);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 13px;
-  padding: 0 24px;
-  border-radius: var(--radius-base);
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+  letter-spacing: var(--tracking-label);
+  border: var(--line);
+  border-color: var(--nuit);
+  border-radius: var(--radius-0);
   white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
 
-/* Tailles */
-.sizeSm {
-  height: 44px;
-  padding: 0 18px;
-  font-size: 12px;
-}
+.sizeSm { min-height: var(--control-s); padding: 0 var(--space-4); }
+.sizeMd { min-height: var(--control-m); padding: 0 var(--space-5); }
+.sizeLg { min-height: var(--control-l); padding: 0 var(--space-6); }
 
-.sizeMd {
-  height: 52px;
-  padding: 0 24px;
-  font-size: 13px;
-}
+.primary { background: var(--nuit); color: var(--blanc); }
+.primary:hover { background: var(--dore); color: var(--nuit); }
 
-.sizeLg {
-  height: 56px;
-  padding: 0 32px;
-  font-size: 14px;
-}
+.secondary { background: transparent; color: var(--nuit); }
+.secondary:hover { background: var(--dore); }
 
-.fullWidth {
-  width: 100%;
-}
+/* Sur fond nuit */
+.dark { background: var(--blanc); color: var(--nuit); border-color: var(--blanc); }
+.dark:hover { background: var(--dore); border-color: var(--dore); }
+.dark:focus-visible { outline-color: var(--dore); }
 
-/* Variantes */
-.primary {
-  background-color: var(--brique);
-  color: var(--sable);
-  border: 1px solid var(--brique);
-}
+.fullWidth { width: 100%; }
 
-.primary:hover, .primary:focus-visible {
-  background-color: var(--rose);
-  color: var(--sapin);
-  border-color: var(--sapin);
-}
-
-.secondary {
-  background-color: transparent;
-  color: var(--sapin);
-  border: var(--border-1);
-}
-
-.secondary:hover, .secondary:focus-visible {
-  background-color: var(--rose);
-  color: var(--sapin);
-  border-color: var(--sapin);
-}
-
-.dark {
-  background-color: transparent;
-  color: var(--sable);
-  border: var(--border-sable-1);
-}
-
-.dark:hover, .dark:focus-visible {
-  background-color: var(--rose);
-  color: var(--sapin);
-  border-color: var(--rose);
-}
-
-.disabled {
-  opacity: 0.5;
+.disabled, .button:disabled {
+  background: var(--gris);
+  color: var(--gris-texte);
+  border-color: var(--gris);
   cursor: not-allowed;
   pointer-events: none;
 }
-

@@ -1,0 +1,67 @@
+{
+  "_comment": [
+    "Correspondance Stripe price_id → carnet, format, cadeau.",
+    "Ces price_id sont des prix TEST MODE créés via Stripe CLI (compte Omniscient Project).",
+    "Remplacer par les price_id LIVE avant de passer en production.",
+    "",
+    "Champs :",
+    "  carnet_slug  : slug du carnet dans la table 'carnets' (ex. noel-edition-2026)",
+    "  format       : 'A4' | 'A5-livret'",
+    "  gift         : true si ce price_id correspond à la version à offrir",
+    "  label        : libellé humain pour les e-mails et les logs"
+  ],
+  "price_1UVucUPbCy5yliSsClXMlM1v": {
+    "carnet_slug": "noel-edition-2026",
+    "format": "A4",
+    "gift": false,
+    "label": "Carnet Noël — A4"
+  },
+  "price_1UVucVPbCy5yliSs4rt20giR": {
+    "carnet_slug": "noel-edition-2026",
+    "format": "A5-livret",
+    "gift": false,
+    "label": "Carnet Noël — A5 livret"
+  },
+  "price_1UVucXPbCy5yliSsKxRngfRH": {
+    "carnet_slug": "noel-edition-2026",
+    "format": "A4",
+    "gift": true,
+    "label": "Carnet Noël — Version à offrir"
+  },
+  "price_1UVucYPbCy5yliSsxAmQFxAw": {
+    "carnet_slug": "halloween-edition-2026",
+    "format": "A4",
+    "gift": false,
+    "label": "Carnet Halloween — A4"
+  },
+  "price_1UVucaPbCy5yliSsH8lufhds": {
+    "carnet_slug": "halloween-edition-2026",
+    "format": "A5-livret",
+    "gift": false,
+    "label": "Carnet Halloween — A5 livret"
+  },
+  "price_1UVucbPbCy5yliSsGy3kMvLE": {
+    "carnet_slug": "halloween-edition-2026",
+    "format": "A4",
+    "gift": true,
+    "label": "Carnet Halloween — Version à offrir"
+  },
+  "price_1UVucdPbCy5yliSsbxrJnnaI": {
+    "carnet_slug": "multi-theme-tour-annee-edition-2026",
+    "format": "A4",
+    "gift": false,
+    "label": "Tour de l'année — A4"
+  },
+  "price_1UVucfPbCy5yliSs3ZRTHwJJ": {
+    "carnet_slug": "multi-theme-tour-annee-edition-2026",
+    "format": "A5-livret",
+    "gift": false,
+    "label": "Tour de l'année — A5 livret"
+  },
+  "price_1UVucgPbCy5yliSsse7gsAuC": {
+    "carnet_slug": "multi-theme-etape-sprint-edition-2026",
+    "format": "A4",
+    "gift": false,
+    "label": "L'Étape Sprint — A4"
+  }
+}

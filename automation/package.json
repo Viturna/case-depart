@@ -1,0 +1,16 @@
+{
+  "name": "case-depart-automation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Automatisation de production et de livraison des carnets PDF Case Départ",
+  "scripts": {
+    "test": "node --test tests/",
+    "demo:sudoku": "node scripts/demo-sudoku.js",
+    "build:fonts": "node scripts/build-fonts.js",
+    "build:workflows": "node scripts/build-workflows.js",
+    "preview": "node scripts/preview.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

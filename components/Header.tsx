@@ -4,97 +4,66 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Header.module.css';
-import SudokuMotif from './SudokuMotif';
 import { useCart } from '@/context/CartContext';
 
-interface HeaderProps {
-  cartCount?: number;
-}
+const navLinks = [
+  { n: '01', label: 'Accueil', href: '/' },
+  { n: '02', label: 'Carnets', href: '/carnets' },
+  { n: '03', label: 'Jouer', href: '/jouer' },
+  { n: '04', label: 'Pass Podium', href: '/jouer#podium' },
+];
 
-export default function Header({ cartCount: propCartCount }: HeaderProps) {
+export default function Header({ cartCount: propCartCount }: { cartCount?: number }) {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const { cartCount, setIsCartOpen } = useCart();
+  const count = propCartCount ?? cartCount;
 
-  const count = propCartCount !== undefined ? propCartCount : cartCount;
-
-  const navLinks = [
-    { label: 'Carnets', href: '/carnets' },
-    { label: 'Carnet Noël', href: '/carnets/carnet-noel' },
-    { label: 'Jeu en ligne', href: '/jouer' },
-    { label: 'Pass Podium', href: '/pass-podium' },
-  ];
+  // Les ancres (Pass Podium) ne marquent pas la page active
+  const isActive = (href: string) => (href === '/' ? pathname === '/' : !href.includes('#') && pathname.startsWith(href));
 
   return (
     <header className={styles.header}>
-      <div className={styles.inner}>
-        <Link href="/" className={styles.brand} aria-label="Case Départ — Accueil">
-          <SudokuMotif size={32} themeColor="sable" variant="logo" fillTopLeft />
-          <span>CASE DÉPART</span>
+      <div className={`container ${styles.inner}`}>
+        <Link href="/" className={styles.brand} aria-label="Case Départ, accueil">
+          Case Départ
         </Link>
 
-        <nav className={styles.nav} aria-label="Navigation principale">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+        <nav id="nav-principale" className={`${styles.nav} ${open ? styles.navOpen : ''}`} aria-label="Navigation principale">
+          {navLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={styles.link}
+              aria-current={isActive(l.href) ? 'page' : undefined}
+              onClick={() => setOpen(false)}
+            >
+              <span className={styles.num}>{l.n}</span>
+              {l.label}
+            </Link>
+          ))}
         </nav>
 
-        <div className={styles.rightGroup}>
-          <Link href="/styleguide" className={styles.accountLink} title="Design System & Styleguide">
-            STYLEGUIDE
-          </Link>
+        <div className={styles.right}>
           <button
             type="button"
-            className={styles.cartLink}
+            className={styles.cart}
             onClick={() => setIsCartOpen(true)}
             aria-label={`Ouvrir le panier, ${count} article${count > 1 ? 's' : ''}`}
           >
-            <span>PANIER</span>
-            <span className={styles.cartBadge}>[{count}]</span>
+            Panier <span className="tabular">({count})</span>
           </button>
           <button
             type="button"
-            className={styles.mobileToggle}
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-expanded={mobileOpen}
-            aria-label="Menu mobile"
+            className={styles.toggle}
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-controls="nav-principale"
           >
-            {mobileOpen ? 'FERMER' : 'MENU'}
+            {open ? 'Fermer' : 'Menu'}
           </button>
         </div>
       </div>
-
-      {/* Dropdown Menu Mobile */}
-      {mobileOpen && (
-        <div className={`${styles.mobileMenu} ${styles.mobileMenuOpen}`}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={styles.mobileLink}
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            href="/styleguide"
-            className={styles.mobileLink}
-            onClick={() => setMobileOpen(false)}
-          >
-            STYLEGUIDE
-          </Link>
-        </div>
-      )}
     </header>
   );
 }

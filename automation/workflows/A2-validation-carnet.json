@@ -1,0 +1,344 @@
+{
+  "name": "A2 — Validation d’un carnet",
+  "nodes": [
+    {
+      "id": "webhook-validation",
+      "name": "Webhook de validation",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        300
+      ],
+      "parameters": {
+        "path": "case-depart-validation",
+        "httpMethod": "GET",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "notes": "Appelé par le lien de notification du workflow A : /webhook/case-depart-validation?token=...&carnet_id=...",
+      "webhookId": "a0000000-0000-4000-8000-000000000002"
+    },
+    {
+      "id": "if-token",
+      "name": "Token valide ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        20,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "if-token-condition",
+              "leftValue": "={{ $json.query.token }}",
+              "rightValue": "={{ $env.CARNET_VALIDATION_TOKEN }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "notes": "Protection par token secret. Le token ne doit jamais apparaître dans un dépôt public.",
+      "notesInFlow": false
+    },
+    {
+      "id": "respond-token",
+      "name": "Refuser le token",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        460
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "Lien de validation invalide.\n\nVérifie que le token correspond à CARNET_VALIDATION_TOKEN dans n8n,\npuis régénère le lien depuis le workflow A.",
+        "options": {
+          "responseCode": 401
+        }
+      }
+    },
+    {
+      "id": "if-carnet",
+      "name": "Carnet fourni ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        180
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "if-carnet-condition",
+              "leftValue": "={{ $json.query.carnet_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "respond-missing",
+      "name": "Refuser sans carnet",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        320
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "Paramètre manquant.\n\nLe lien doit contenir carnet_id. Régénère-le depuis la notification du workflow A.",
+        "options": {
+          "responseCode": 400
+        }
+      }
+    },
+    {
+      "id": "http-valider",
+      "name": "Marquer le carnet prêt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        120
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $env.SUPABASE_URL + '/rest/v1/carnets?id=eq.' + $json.query.carnet_id }}",
+        "authentication": "none",
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ \"Bearer \" + $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            },
+            {
+              "name": "Accept",
+              "value": "application/vnd.pgrst.object+json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ statut: 'pret', valide_le: new Date().toISOString() }) }}"
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "notes": "Passe le carnet de a_valider à pret et horodate la validation.",
+      "notesInFlow": false
+    },
+    {
+      "id": "if-revalidate",
+      "name": "Revalidation site configurée ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        680,
+        120
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "if-revalidate-condition",
+              "leftValue": "={{ Boolean($env.SITE_REVALIDATE_URL) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "http-revalidate",
+      "name": "Revalider le site",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        40
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.SITE_REVALIDATE_URL }}",
+        "authentication": "none",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Optionnel. À brancher sur une route de revalidation (Next.js on-demand revalidation) si le site met les carnets en cache.",
+      "notesInFlow": false
+    },
+    {
+      "id": "respond-success",
+      "name": "Confirmer la validation",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        140
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "Carnet validé.\n\nLe carnet est maintenant au statut « prêt ». Il peut être livré aux clients.\nTu peux fermer cette page.",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook de validation": {
+      "main": [
+        [
+          {
+            "node": "Token valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Token valide ?": {
+      "main": [
+        [
+          {
+            "node": "Carnet fourni ?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Refuser le token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carnet fourni ?": {
+      "main": [
+        [
+          {
+            "node": "Marquer le carnet prêt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Refuser sans carnet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marquer le carnet prêt": {
+      "main": [
+        [
+          {
+            "node": "Revalidation site configurée ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revalidation site configurée ?": {
+      "main": [
+        [
+          {
+            "node": "Revalider le site",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Confirmer la validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revalider le site": {
+      "main": [
+        [
+          {
+            "node": "Confirmer la validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "staticData": null,
+  "pinData": {},
+  "meta": {
+    "generatedBy": "automation/scripts/build-workflows.js",
+    "description": "Valide un carnet produit par A : passe le statut à pret, puis revalide le site si SITE_REVALIDATE_URL est configurée."
+  },
+  "tags": []
+}
