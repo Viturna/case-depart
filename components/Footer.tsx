@@ -71,7 +71,7 @@ export default function Footer() {
               Des sudokus pensés pour le crayon, l’impression nette et la compétition en ligne.
             </p>
             <p className={styles.textSmall}>
-              Contact complice : atelier@casedepart.fr
+              Contact complice : <a href="mailto:contact@viturna.fr" style={{ color: 'var(--sable)', textDecoration: 'underline' }}>contact@viturna.fr</a>
             </p>
           </div>
         </div>

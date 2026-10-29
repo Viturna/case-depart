@@ -2,6 +2,13 @@
   "mcpServers": {
     "vercel": {
       "url": "https://mcp.vercel.com"
+    },
+    "stripe": {
+      "command": "npx",
+      "args": ["-y", "@stripe/mcp"],
+      "env": {
+        "STRIPE_SECRET_KEY": "sk_test_51TNgKNPbCy5yliSsW5JERJIs5pMXrWhlAyzUnzAX4w2Tzsybam8ZGyn6twedV2MuBLHCECs5V2SRiaJfKNJa3FoE00jrmXi4xL"
+      }
     }
   }
 }

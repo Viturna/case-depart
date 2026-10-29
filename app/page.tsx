@@ -12,6 +12,8 @@ import ThemesCarousel from '@/components/ThemesCarousel';
 import CoversWall from '@/components/CoversWall';
 import StarterForm from '@/components/StarterForm';
 import Cover from '@/components/Cover';
+import OrderSuccessBanner from '@/components/OrderSuccessBanner';
+import { Suspense } from 'react';
 import productsData from '@/data/products.json';
 import styles from './page.module.css';
 
@@ -48,6 +50,9 @@ export default function HomePage() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Suspense fallback={null}>
+        <OrderSuccessBanner />
+      </Suspense>
       {/* Bandeau défilant haut 40px */}
       <Bandeau />
 
