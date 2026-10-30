@@ -17,6 +17,20 @@ const anton = Anton({
 export const metadata: Metadata = {
   title: 'Case Départ — Le sudoku prend un nouveau départ',
   description: 'Carnets de sudoku thématiques en PDF et jeu en ligne chronométré. Échauffement, Sprint, Marathon.',
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Case Départ',
+  },
+};
+
+export const viewport = {
+  themeColor: '#041735',
 };
 
 export default function RootLayout({
