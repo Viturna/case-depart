@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from './Footer.module.css';
 import Split from './Split';
@@ -30,7 +32,48 @@ const cols = [
   },
 ];
 
+// Rayon d'influence de la souris sur les lettres du mot-clé, en pixels.
+const WAVE_RADIUS = 160;
+// Vitesse à laquelle chaque lettre rattrape son intensité cible : une
+// boucle continue + ce ressort donnent une vague fluide qui traîne derrière
+// le curseur, plutôt qu'un calcul instantané collé au rythme de mousemove.
+const SPRING = 0.16;
+
 export default function Footer() {
+  const fitRef = useRef<HTMLDivElement>(null);
+  const mouse = useRef({ x: -9999, y: -9999 });
+  const waves = useRef(new WeakMap<HTMLElement, number>());
+
+  useEffect(() => {
+    let raf: number;
+    const loop = () => {
+      const chars = fitRef.current?.querySelectorAll<HTMLElement>('.split-char');
+      chars?.forEach((char) => {
+        const rect = char.getBoundingClientRect();
+        const dx = mouse.current.x - (rect.left + rect.width / 2);
+        const dy = mouse.current.y - (rect.top + rect.height / 2);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const t = Math.max(0, 1 - dist / WAVE_RADIUS);
+        const target = t * t * (3 - 2 * t); // smoothstep : courbe plus naturelle qu'un dégradé linéaire
+        const current = waves.current.get(char) ?? 0;
+        const next = current + (target - current) * SPRING;
+        waves.current.set(char, next);
+        char.style.setProperty('--wave', String(next));
+      });
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    mouse.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleLeave = () => {
+    mouse.current = { x: -9999, y: -9999 };
+  };
+
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.grid}`}>
@@ -55,7 +98,7 @@ export default function Footer() {
       </div>
 
       <div className="container">
-        <div className={styles.fit} aria-hidden="true">
+        <div ref={fitRef} className={styles.fit} aria-hidden="true" onMouseMove={handleMove} onMouseLeave={handleLeave}>
           <Split className={styles.wordmark} lines={['Case Départ']} />
         </div>
         <div className={`label ${styles.bottom}`}>

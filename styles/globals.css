@@ -11,6 +11,12 @@
   color: var(--noir);
 }
 
+/* Curseur personnalisé (components/CustomCursor) : masque le curseur natif
+   uniquement quand une souris fine est détectée côté JS. */
+html.custom-cursor, html.custom-cursor * {
+  cursor: none !important;
+}
+
 html, body {
   min-height: 100%;
   background-color: var(--blanc);

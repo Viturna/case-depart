@@ -37,8 +37,16 @@
 /* La taille suit la largeur du conteneur, comme le nom géant de Dex Harlan */
 .fit { container-type: inline-size; margin-top: var(--space-8); }
 
-/* Survol : la lettre s'étire depuis sa ligne de base */
-.wordmark :global(.split-char):hover { transform: scaleY(1.18); transition-delay: 0s; transition-duration: var(--dur-base); }
+/* Onde au passage du curseur : components/Footer.tsx pilote --wave par
+   lettre via une boucle d'animation avec ressort (déjà lissée côté JS,
+   donc pas de transition CSS ici — superposer les deux alourdirait le
+   mouvement). Une fois l'apparition au scroll terminée (.is-visible),
+   le transform de base bascule du translateY d'entrée à la vague. */
+.wordmark:global(.is-visible) :global(.split-char) {
+  transition: none;
+  transform: scaleY(calc(1 + var(--wave, 0) * 0.4))
+    translateY(calc(var(--wave, 0) * -0.08em));
+}
 
 
 .bottom {

@@ -5,6 +5,7 @@ import { CartProvider } from '@/context/CartContext';
 import CartDrawer from '@/components/CartDrawer';
 import Reveal from '@/components/Reveal';
 import Preloader from '@/components/Preloader';
+import CustomCursor from '@/components/CustomCursor';
 
 const anton = Anton({
   subsets: ['latin'],
@@ -43,6 +44,7 @@ export default function RootLayout({
       </head>
       <body>
         <Preloader />
+        <CustomCursor />
         <CartProvider>
           {children}
           <CartDrawer />

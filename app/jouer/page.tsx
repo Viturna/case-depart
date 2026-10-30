@@ -5,6 +5,7 @@ import Tag from '@/components/Tag';
 import Split from '@/components/Split';
 import Button from '@/components/Button';
 import SudokuGame from '@/components/SudokuGame';
+import RankedGame from '@/components/RankedGame';
 import styles from './page.module.css';
 
 export const metadata = {
@@ -23,9 +24,9 @@ const regles = [
 const comparatif = [
   { label: 'Grille du jour, 3 niveaux', gratuit: true, podium: true },
   { label: 'Chrono et record perso', gratuit: true, podium: true },
+  { label: 'Défi classé quotidien (Sprint)', gratuit: true, podium: true },
+  { label: 'Classement entre complices', gratuit: true, podium: true },
   { label: 'Grilles illimitées', gratuit: false, podium: true },
-  { label: 'Défi chronométré du lundi', gratuit: false, podium: true },
-  { label: 'Classement entre complices', gratuit: false, podium: true },
   { label: 'Grilles des carnets en version en ligne', gratuit: false, podium: true },
 ];
 
@@ -58,13 +59,22 @@ export default function JouerPage() {
           </aside>
         </section>
 
+        <section id="classement" className={`container ${styles.classement}`} aria-labelledby="classement-titre">
+          <Tag>Défi du jour</Tag>
+          <Split as="h2" id="classement-titre" className={`title ${styles.h2}`} lines={['Le chrono ne ment jamais']} />
+          <p className={styles.introText}>
+            Même grille Sprint pour tout le monde, chaque jour. Connecte-toi, résous-la, ton temps (chronométré par le serveur, pas par ton navigateur) t’inscrit au classement.
+          </p>
+          <RankedGame />
+        </section>
+
         <section id="podium" className={styles.podium} aria-labelledby="podium-titre">
           <div className={`container ${styles.podiumInner}`}>
             <div className={styles.podiumIntro}>
               <Tag>Pass Podium</Tag>
-              <Split as="h2" id="podium-titre" className={`title ${styles.h2}`} lines={['Le chrono ne ment jamais']} />
+              <Split as="h2" id="podium-titre" className={`title ${styles.h2}`} lines={['Encore plus de course']} />
               <p>
-                Le mode compétition de Case Départ : grilles à volonté, un défi chaque lundi et un classement qui remet les compteurs à zéro chaque semaine.
+                Le classement quotidien est gratuit. Le Pass Podium ajoutera les grilles illimitées et les grilles des carnets jouables en ligne.
               </p>
               <Button href="mailto:contact@viturna.fr?subject=Pass%20Podium" size="lg" variant="dark">Me prévenir au lancement</Button>
             </div>
