@@ -6,13 +6,34 @@ import Button from './Button';
 
 export default function StarterForm() {
   const [email, setEmail] = useState('');
+  const [consentement, setConsentement] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
+    if (!email.trim() || !consentement) return;
+
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/starter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), consentement }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Une erreur est survenue.');
+        setLoading(false);
+        return;
+      }
       setIsSubmitted(true);
+    } catch {
+      setError('Une erreur est survenue, réessaie.');
     }
+    setLoading(false);
   };
 
   return (
@@ -53,8 +74,19 @@ export default function StarterForm() {
               required
               className={styles.inputField}
             />
-            <Button type="submit" size="lg" variant="primary">
-              JE LE VEUX →
+            <label style={{ display: 'flex', gap: '8px', fontSize: '13px', alignItems: 'flex-start' }}>
+              <input
+                type="checkbox"
+                checked={consentement}
+                onChange={(e) => setConsentement(e.target.checked)}
+                required
+                style={{ marginTop: '3px' }}
+              />
+              J’accepte de recevoir le Starter et des e-mails sur les prochains carnets. Désinscription en un clic.
+            </label>
+            {error && <p style={{ color: 'var(--brique)', fontSize: '13px' }}>{error}</p>}
+            <Button type="submit" size="lg" variant="primary" disabled={loading}>
+              {loading ? 'ENVOI…' : 'JE LE VEUX →'}
             </Button>
             <p className={styles.notice}>
               Pas de spam. Juste ton carnet et un mot pour le prochain thème.
@@ -65,4 +97,3 @@ export default function StarterForm() {
     </section>
   );
 }
-

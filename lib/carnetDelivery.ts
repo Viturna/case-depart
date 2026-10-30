@@ -38,6 +38,52 @@ async function signPdfPath(pdfPath: string): Promise<string | null> {
   return signedURL ? `${supabaseUrl}/storage/v1${signedURL}` : null;
 }
 
+/** Dernier carnet Starter validé (statut pret), pour la capture de lead gratuite. */
+export async function getLatestStarterDownloadUrl(): Promise<string | null> {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) return null;
+
+  const res = await fetch(
+    `${supabaseUrl}/rest/v1/carnets?type=eq.starter&statut=eq.pret&order=created_at.desc&limit=1&select=pdf_paths`,
+    { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } }
+  );
+  if (!res.ok) return null;
+  const rows = await res.json();
+  const pdfPath = rows?.[0]?.pdf_paths?.A4;
+  return pdfPath ? signPdfPath(pdfPath) : null;
+}
+
+export interface StarterLeadInput {
+  email: string;
+  consentement: boolean;
+  theme?: string;
+  source?: string;
+}
+
+/** Enregistre le lead Starter (idempotent sur l'e-mail, comme le workflow n8n C). */
+export async function recordStarterLead(input: StarterLeadInput): Promise<void> {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) return;
+
+  await fetch(`${supabaseUrl}/rest/v1/leads_starter`, {
+    method: 'POST',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=ignore-duplicates',
+    },
+    body: JSON.stringify({
+      email: input.email,
+      consentement: input.consentement,
+      theme: input.theme || null,
+      source: input.source || 'site',
+    }),
+  });
+}
+
 export interface OrderSummary {
   id: string;
   createdAt: string;
