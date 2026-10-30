@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendOrderConfirmationEmail } from '@/lib/mailer';
-import { resolveFirstDownloadUrl, DeliveryItem } from '@/lib/carnetDelivery';
+import { recordOrder, DeliveryItem } from '@/lib/carnetDelivery';
 
 export async function POST(req: Request) {
   try {
@@ -34,7 +34,12 @@ export async function POST(req: Request) {
 
       if (customerEmail) {
         console.log(`Paiement Stripe reçu pour ${customerEmail}. Envoi de l'email de confirmation...`);
-        const downloadUrl = await resolveFirstDownloadUrl(deliveryItems);
+        const { downloadUrl } = await recordOrder({
+          stripeSessionId: session.id,
+          email: customerEmail,
+          items: deliveryItems,
+          montantCents: session?.amount_total ?? null,
+        });
         await sendOrderConfirmationEmail({
           customerEmail,
           orderNumber,
