@@ -160,6 +160,44 @@
   color: var(--gris-texte);
 }
 
+.orderList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--line);
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  border-bottom: var(--line);
+}
+
+.orderTitle {
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-body);
+  margin: 0 0 var(--space-1);
+}
+
+.orderDownload {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  border: var(--line);
+  padding: var(--space-2) var(--space-4);
+  color: var(--noir);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.orderDownload:hover { background: var(--gris); }
+
 .dangerZone {
   margin-top: var(--space-8);
   border: 1px solid var(--erreur);

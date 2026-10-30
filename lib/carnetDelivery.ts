@@ -8,8 +8,75 @@ const CARNET_SLUG_MAP: Record<string, string> = {
   'tour-de-l-annee': 'multi-theme-tour-annee-edition-2026',
 };
 
+const CARNET_LABELS: Record<string, string> = {
+  'noel-edition-2026': 'Carnet de Noël',
+  'halloween-edition-2026': 'Carnet d\'Halloween',
+  'multi-theme-tour-annee-edition-2026': 'Tour de l\'année',
+  'multi-theme-etape-sprint-edition-2026': 'L\'Étape Sprint',
+};
+
 function normalizeFormat(format: string): 'A4' | 'A5-livret' {
   return format.toLowerCase().includes('livret') ? 'A5-livret' : 'A4';
+}
+
+async function signPdfPath(pdfPath: string): Promise<string | null> {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) return null;
+
+  const signRes = await fetch(`${supabaseUrl}/storage/v1/object/sign/pdfs/${pdfPath}`, {
+    method: 'POST',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ expiresIn: 604800 }),
+  });
+  if (!signRes.ok) return null;
+  const { signedURL } = await signRes.json();
+  return signedURL ? `${supabaseUrl}/storage/v1${signedURL}` : null;
+}
+
+export interface OrderSummary {
+  id: string;
+  createdAt: string;
+  carnetLabel: string;
+  format: string;
+  gift: boolean;
+  montantCents: number | null;
+  statut: 'recue' | 'livree' | 'erreur';
+  downloadUrl: string | null;
+}
+
+/** Historique de commandes pour le tableau de bord /compte, par e-mail du compte connecté. */
+export async function getOrdersForEmail(email: string): Promise<OrderSummary[]> {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) return [];
+
+  const res = await fetch(
+    `${supabaseUrl}/rest/v1/commandes?email=eq.${encodeURIComponent(email)}&order=created_at.desc&select=id,created_at,carnet_slug,format,gift,montant_cents,statut,pdf_path`,
+    { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } }
+  );
+  if (!res.ok) return [];
+  const rows: Array<{
+    id: string; created_at: string; carnet_slug: string; format: string; gift: boolean;
+    montant_cents: number | null; statut: 'recue' | 'livree' | 'erreur'; pdf_path: string | null;
+  }> = await res.json();
+
+  return Promise.all(
+    rows.map(async (row) => ({
+      id: row.id,
+      createdAt: row.created_at,
+      carnetLabel: CARNET_LABELS[row.carnet_slug] || row.carnet_slug,
+      format: row.format,
+      gift: row.gift,
+      montantCents: row.montant_cents,
+      statut: row.statut,
+      downloadUrl: row.pdf_path ? await signPdfPath(row.pdf_path) : null,
+    }))
+  );
 }
 
 export interface DeliveryItem {
@@ -45,20 +112,10 @@ async function resolveItem(item: DeliveryItem): Promise<DeliveryResult | null> {
   const pdfPath = rows?.[0]?.pdf_paths?.[format];
   if (!pdfPath) return null;
 
-  const signRes = await fetch(`${supabaseUrl}/storage/v1/object/sign/pdfs/${pdfPath}`, {
-    method: 'POST',
-    headers: {
-      apikey: serviceKey,
-      Authorization: `Bearer ${serviceKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ expiresIn: 604800 }),
-  });
-  if (!signRes.ok) return null;
-  const { signedURL } = await signRes.json();
-  if (!signedURL) return null;
+  const downloadUrl = await signPdfPath(pdfPath);
+  if (!downloadUrl) return null;
 
-  return { downloadUrl: `${supabaseUrl}/storage/v1${signedURL}`, carnetSlug, format, pdfPath };
+  return { downloadUrl, carnetSlug, format, pdfPath };
 }
 
 export interface RecordOrderInput {
