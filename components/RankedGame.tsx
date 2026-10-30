@@ -62,9 +62,8 @@ export default function RankedGame() {
       });
   }, []);
 
-  useEffect(() => {
-    if (loggedIn) loadGrille();
-  }, [loggedIn, loadGrille]);
+  // La grille ne se charge qu'au clic sur « Commencer » : c'est cet appel qui
+  // démarre le chrono serveur, pas l'arrivée sur la page.
 
   // Chrono d'affichage seulement : le temps officiel est calculé par le serveur.
   useEffect(() => {
@@ -120,6 +119,7 @@ export default function RankedGame() {
   const sel = selected;
   const selValue = sel !== null ? values[sel] : 0;
   const remaining = (n: number) => 9 - values.filter((v) => v === n).length;
+  const myBest = leaderboard.find((e) => e.isYou)?.seconds ?? null;
 
   if (!authChecked) return null;
 
@@ -128,6 +128,35 @@ export default function RankedGame() {
       <div className={rankedStyles.gate}>
         <p>Connecte-toi pour jouer la grille du jour et apparaître au classement.</p>
         <Link href="/compte/connexion?next=/jouer" className={rankedStyles.gateLink}>Se connecter →</Link>
+      </div>
+    );
+  }
+
+  if (!puzzle) {
+    return (
+      <div className={rankedStyles.wrap}>
+        <div className={rankedStyles.gate}>
+          <p>Une grille Sprint, la même pour tout le monde aujourd’hui. Le chrono démarre quand tu cliques.</p>
+          {myBest !== null && <p className={rankedStyles.empty}>Ton meilleur temps aujourd’hui : {fmt(myBest)}.</p>}
+          <button type="button" className={rankedStyles.gateLink} onClick={loadGrille}>Commencer le défi →</button>
+        </div>
+
+        <aside className={rankedStyles.leaderboard}>
+          <p className="label muted">Classement du jour</p>
+          {leaderboard.length === 0 ? (
+            <p className={rankedStyles.empty}>Personne n’a encore terminé la grille du jour. Sois le premier.</p>
+          ) : (
+            <ol className={rankedStyles.list}>
+              {leaderboard.map((e, i) => (
+                <li key={i} className={e.isYou ? rankedStyles.you : ''}>
+                  <span className="tabular">{i + 1}</span>
+                  <span>{e.nom}</span>
+                  <span className="tabular">{fmt(e.seconds)}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </aside>
       </div>
     );
   }

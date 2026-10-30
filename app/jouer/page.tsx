@@ -6,6 +6,7 @@ import Split from '@/components/Split';
 import Button from '@/components/Button';
 import SudokuGame from '@/components/SudokuGame';
 import RankedGame from '@/components/RankedGame';
+import Tabs from '@/components/Tabs';
 import styles from './page.module.css';
 
 export const metadata = {
@@ -40,12 +41,20 @@ export default function JouerPage() {
           <Tag>Jouer en ligne</Tag>
           <Split as="h1" id="jouer-titre" trigger="load" className={`title ${styles.h1}`} lines={['La grille du jour']} />
           <p className={styles.introText}>
-            Pas d’imprimante sous la main ? Une grille, un chrono, et c’est parti. Choisis ton allure.
+            Pas d’imprimante sous la main ? Une grille, un chrono, et c’est parti. En partie libre ou au défi classé du jour.
           </p>
         </section>
 
-        <section className={`container ${styles.play}`} aria-label="Grille de sudoku">
-          <SudokuGame />
+        <section id="classement" className={`container ${styles.play}`} aria-label="Grille de sudoku">
+          <div>
+            <Tabs
+              label="Mode de jeu"
+              tabs={[
+                { label: 'Partie libre', content: <SudokuGame /> },
+                { label: 'Défi du jour (classé)', content: <RankedGame /> },
+              ]}
+            />
+          </div>
           <aside className={styles.rules}>
             <Tag>Comment jouer</Tag>
             <ol className={styles.rulesList}>
@@ -57,15 +66,6 @@ export default function JouerPage() {
               ))}
             </ol>
           </aside>
-        </section>
-
-        <section id="classement" className={`container ${styles.classement}`} aria-labelledby="classement-titre">
-          <Tag>Défi du jour</Tag>
-          <Split as="h2" id="classement-titre" className={`title ${styles.h2}`} lines={['Le chrono ne ment jamais']} />
-          <p className={styles.introText}>
-            Même grille Sprint pour tout le monde, chaque jour. Connecte-toi, résous-la, ton temps (chronométré par le serveur, pas par ton navigateur) t’inscrit au classement.
-          </p>
-          <RankedGame />
         </section>
 
         <section id="podium" className={styles.podium} aria-labelledby="podium-titre">
