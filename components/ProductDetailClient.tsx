@@ -69,10 +69,26 @@ function Icon({ name }: { name: (typeof avantages)[number]['icon'] }) {
   );
 }
 
+// Vraie couverture du PDF, extraite du carnet final (pas un mockup) — seulement
+// pour les thèmes qui en ont une (automation/case-depart-template-*.html).
+const REAL_COVERS: Record<string, string> = {
+  'carnet-noel': '/covers/noel.jpg',
+  'carnet-halloween': '/covers/halloween.jpg',
+};
+
 // Aperçu d'une page du carnet
 function PageMock({ id, product }: { id: PageId; product: ProductItem }) {
   const theme = getTheme(product.theme);
   if (id === 'couv') {
+    const realCover = REAL_COVERS[product.slug];
+    if (realCover) {
+      return (
+        <div className={`${styles.sheet} ${styles.cover}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={realCover} alt={'Couverture du ' + product.nom} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        </div>
+      );
+    }
     return (
       <div className={`${styles.sheet} ${styles.cover}`} style={{ background: theme.bg, color: theme.ink }}>
         <GridPattern className={styles.coverGrid} />
