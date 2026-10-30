@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { sendOrderConfirmationEmail } from '@/lib/mailer';
 import { recordOrder, DeliveryItem } from '@/lib/carnetDelivery';
+import { grantPodium } from '@/lib/podium';
 
 export async function POST(req: Request) {
   try {
@@ -21,6 +22,14 @@ export async function POST(req: Request) {
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data?.object;
+
+      if (session?.metadata?.kind === 'podium' && session?.metadata?.user_id) {
+        if (session.payment_status === 'paid') {
+          await grantPodium(session.metadata.user_id);
+        }
+        return NextResponse.json({ received: true });
+      }
+
       const customerEmail = session?.customer_details?.email || session?.customer_email || session?.metadata?.customer_email;
       const orderNumber = session?.id?.slice(-8).toUpperCase() || 'CD-001';
       const totalAmount = session?.amount_total ? (session.amount_total / 100).toFixed(2).replace('.', ',') + ' €' : '0,00 €';

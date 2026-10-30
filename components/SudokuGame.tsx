@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import styles from './SudokuGame.module.css';
 import { generate, type Level } from '@/lib/sudoku';
+import { createClient } from '@/lib/supabase/client';
 
 const LEVELS: { value: Level; label: string }[] = [
   { value: 'echauffement', label: 'Échauffement ›' },
@@ -21,6 +24,17 @@ function readBest(): Partial<Record<Level, number>> {
 }
 
 export default function SudokuGame() {
+  return (
+    <Suspense>
+      <SudokuGameInner />
+    </Suspense>
+  );
+}
+
+function SudokuGameInner() {
+  const searchParams = useSearchParams();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [level, setLevel] = useState<Level>('echauffement');
   const [puzzle, setPuzzle] = useState<number[] | null>(null);
   const [solution, setSolution] = useState<number[]>([]);
@@ -30,12 +44,30 @@ export default function SudokuGame() {
   const [seconds, setSeconds] = useState(0);
   const [paused, setPaused] = useState(false);
   const [best, setBest] = useState<Partial<Record<Level, number>>>({});
+  const [unlocked, setUnlocked] = useState(false);
+  const [playsToday, setPlaysToday] = useState(0);
+  const [limit, setLimit] = useState(3);
+  const [blocked, setBlocked] = useState(false);
+  const [buying, setBuying] = useState(false);
   const cellRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const done = puzzle !== null && values.length === 81 && values.every((v, i) => v === solution[i]);
 
-  // Génération côté client seulement (aléatoire = pas de rendu serveur identique)
-  const newGame = useCallback((l: Level) => {
+  // Vérifie la limite côté serveur avant de générer une grille (jamais côté client, sinon trivialement contournable).
+  const newGame = useCallback(async (l: Level) => {
+    const res = await fetch('/api/jouer/nouvelle-partie', { method: 'POST' });
+    const data = await res.json();
+    if (!res.ok || !data.allowed) {
+      setBlocked(true);
+      setPlaysToday(data.playsToday ?? limit);
+      setUnlocked(Boolean(data.unlocked));
+      return;
+    }
+    setBlocked(false);
+    setUnlocked(Boolean(data.unlocked));
+    setPlaysToday(data.playsToday ?? 0);
+    setLimit(data.limit ?? 3);
+
     const g = generate(l);
     setPuzzle(g.puzzle);
     setSolution(g.solution);
@@ -44,9 +76,38 @@ export default function SudokuGame() {
     setErrors(0);
     setSeconds(0);
     setPaused(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => { newGame(level); setBest(readBest()); }, [level, newGame]);
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setLoggedIn(Boolean(user));
+      setAuthChecked(true);
+    });
+  }, []);
+
+  // Retour de Stripe après l'achat du Pass Podium.
+  useEffect(() => {
+    const sessionId = searchParams.get('session_id');
+    if (searchParams.get('podium') === 'success' && sessionId) {
+      fetch(`/api/podium/confirm?session_id=${sessionId}`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.unlocked) {
+            setUnlocked(true);
+            setBlocked(false);
+            newGame(level);
+          }
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (loggedIn) { newGame(level); setBest(readBest()); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [level, loggedIn]);
 
   // Chrono
   useEffect(() => {
@@ -65,6 +126,14 @@ export default function SudokuGame() {
       setBest(b);
     }
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const buyPodium = async () => {
+    setBuying(true);
+    const res = await fetch('/api/podium/checkout', { method: 'POST' });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else setBuying(false);
+  };
 
   const play = (n: number) => {
     if (selected === null || !puzzle || puzzle[selected] !== 0 || paused || done) return;
@@ -96,6 +165,31 @@ export default function SudokuGame() {
   const selValue = sel !== null ? values[sel] : 0;
   const remaining = (n: number) => 9 - values.filter((v, i) => v === n && v === solution[i]).length;
 
+  if (!authChecked) return null;
+
+  if (!loggedIn) {
+    return (
+      <div className={styles.gate}>
+        <p>Connecte-toi pour jouer en ligne — {limit} grilles gratuites par jour, et le Pass Podium pour l’illimité.</p>
+        <Link href="/compte/connexion?next=/jouer" className={styles.gateLink}>Se connecter →</Link>
+      </div>
+    );
+  }
+
+  if (blocked) {
+    return (
+      <div className={styles.gate}>
+        <p className="label muted">Limite quotidienne atteinte</p>
+        <p>
+          Tu as joué tes {limit} grilles gratuites d’aujourd’hui. Le Pass Podium débloque les parties illimitées, à vie, pour 4,99 €.
+        </p>
+        <button type="button" className={styles.gateLink} onClick={buyPodium} disabled={buying}>
+          {buying ? 'Redirection…' : 'Débloquer avec le Pass Podium →'}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.game}>
       <div className={styles.bar}>
@@ -109,6 +203,9 @@ export default function SudokuGame() {
         <div className={styles.stats}>
           <p className="label muted">Erreurs <span className="tabular">{errors}</span></p>
           <p className="label muted">Record <span className="tabular">{best[level] !== undefined ? fmt(best[level]!) : '—'}</span></p>
+          <p className="label muted">
+            {unlocked ? 'Illimité' : <>Aujourd’hui <span className="tabular">{playsToday}/{limit}</span></>}
+          </p>
         </div>
       </div>
 

@@ -1,5 +1,26 @@
 .game { display: grid; gap: var(--space-5); }
 
+.gate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-7);
+  border: var(--line);
+  background: var(--gris);
+}
+
+.gateLink {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--noir);
+}
+
 .bar { display: grid; gap: var(--space-3); }
 .levels { display: flex; gap: var(--space-2); overflow-x: auto; scrollbar-width: none; }
 .level {

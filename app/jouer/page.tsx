@@ -3,10 +3,10 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Tag from '@/components/Tag';
 import Split from '@/components/Split';
-import Button from '@/components/Button';
 import SudokuGame from '@/components/SudokuGame';
 import RankedGame from '@/components/RankedGame';
 import Tabs from '@/components/Tabs';
+import PodiumBuyButton from '@/components/PodiumBuyButton';
 import styles from './page.module.css';
 
 export const metadata = {
@@ -23,7 +23,7 @@ const regles = [
 
 // Comparatif façon carte : la colonne de droite aligne ce que chaque formule inclut
 const comparatif = [
-  { label: 'Grille du jour, 3 niveaux', gratuit: true, podium: true },
+  { label: '3 grilles par jour, 3 niveaux', gratuit: true, podium: true },
   { label: 'Chrono et record perso', gratuit: true, podium: true },
   { label: 'Défi classé quotidien (Sprint)', gratuit: true, podium: true },
   { label: 'Classement entre complices', gratuit: true, podium: true },
@@ -74,9 +74,9 @@ export default function JouerPage() {
               <Tag>Pass Podium</Tag>
               <Split as="h2" id="podium-titre" className={`title ${styles.h2}`} lines={['Encore plus de course']} />
               <p>
-                Le classement quotidien est gratuit. Le Pass Podium ajoutera les grilles illimitées et les grilles des carnets jouables en ligne.
+                Le classement quotidien est gratuit. Le Pass Podium débloque les parties illimitées dès maintenant — à vie, pour 4,99 €. Les grilles des carnets jouables en ligne arrivent ensuite.
               </p>
-              <Button href="mailto:contact@viturna.fr?subject=Pass%20Podium" size="lg" variant="dark">Me prévenir au lancement</Button>
+              <PodiumBuyButton />
             </div>
 
             <table className={styles.compare}>
