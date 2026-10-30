@@ -1,37 +1,64 @@
+.intro {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-7) var(--space-6);
+}
+
+.h1 { font-size: var(--fs-h2); }
+
+.introText { max-width: 44ch; }
+
 .wrap {
-  max-width: 420px;
-  margin: 0 auto;
+  max-width: 440px;
+  padding-block: 0 var(--section-y);
+}
+
+.card {
+  border: var(--line);
+  padding: var(--space-6);
+  background: var(--blanc);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
+  gap: var(--space-4);
+}
+
+.section + .section {
+  margin-top: var(--space-8);
+}
+
+.sectionTitle {
+  font-family: var(--font-title);
+  font-size: var(--fs-h3);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-title);
+  margin: 0 0 var(--space-4);
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .label {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--sapin);
+  color: var(--gris-texte);
 }
 
 .input {
-  height: 48px;
-  border: var(--border-1);
-  background-color: var(--sable);
-  color: var(--sapin);
-  padding: 0 16px;
+  height: var(--control-l);
+  border: var(--line);
+  background-color: var(--blanc);
+  color: var(--noir);
+  padding: 0 var(--space-4);
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--fs-body);
 }
 
 .input:focus-visible {
@@ -41,51 +68,109 @@
 
 .hint {
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--sapin);
-  opacity: 0.8;
+  font-size: var(--fs-label);
+  color: var(--gris-texte);
 }
 
 .error {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-small);
   color: var(--erreur);
   border-left: 2px solid var(--erreur);
-  padding-left: 10px;
+  padding-left: var(--space-3);
 }
 
 .success {
   font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--sapin);
-  border-left: 2px solid var(--sapin);
-  padding-left: 10px;
+  font-size: var(--fs-small);
+  color: var(--nuit);
+  border-left: 2px solid var(--nuit);
+  padding-left: var(--space-3);
 }
 
 .links {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-label);
 }
 
 .links a {
-  color: var(--sapin);
+  color: var(--noir);
   text-decoration: underline;
 }
 
+.oauthGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.oauthButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  height: var(--control-l);
+  border: var(--line);
+  background: var(--blanc);
+  color: var(--noir);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+
+.oauthButton:hover { background: var(--gris); }
+.oauthButton:disabled { opacity: var(--dim); cursor: not-allowed; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--gris-texte);
+  text-transform: uppercase;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gris);
+}
+
+.accountHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.email {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--gris-texte);
+}
+
 .dangerZone {
-  margin-top: 48px;
-  border: 1px solid var(--brique);
-  padding: 20px;
+  margin-top: var(--space-8);
+  border: 1px solid var(--erreur);
+  padding: var(--space-6);
 }
 
 .dangerTitle {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--brique);
-  margin: 0 0 8px;
+  color: var(--erreur);
+  margin: 0 0 var(--space-2);
 }

@@ -5,6 +5,9 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
+import Tag from '@/components/Tag';
+import Split from '@/components/Split';
+import OAuthButtons from '../OAuthButtons';
 import styles from '@/components/AuthForm.module.css';
 import { signUpAction } from '../actions';
 
@@ -27,46 +30,58 @@ export default function InscriptionPage() {
   return (
     <>
       <Header />
-      <main className="container" style={{ padding: '64px 0 96px' }}>
-        <div className={styles.wrap}>
-          <h1 className="title">Créer un compte</h1>
+      <main>
+        <section className={`container ${styles.intro}`} aria-labelledby="inscription-titre">
+          <Tag>Mon compte</Tag>
+          <Split as="h1" id="inscription-titre" trigger="load" className={`title ${styles.h1}`} lines={['Créer un compte']} />
+        </section>
 
-          {error && <p className={styles.error}>{error}</p>}
-          {success && <p className={styles.success}>{success}</p>}
+        <section className={`container ${styles.wrap}`}>
+          <div className={styles.card}>
+            {!success && (
+              <>
+                <OAuthButtons />
+                <div className={styles.divider}>ou par e-mail</div>
+              </>
+            )}
 
-          {!success && (
-            <form className={styles.form} onSubmit={handleSubmit}>
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="nom">Nom</label>
-                <input className={styles.input} id="nom" name="nom" type="text" autoComplete="name" />
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="email">E-mail</label>
-                <input className={styles.input} id="email" name="email" type="email" autoComplete="email" required />
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="password">Mot de passe</label>
-                <input
-                  className={styles.input}
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  minLength={8}
-                  required
-                />
-                <span className={styles.hint}>8 caractères minimum.</span>
-              </div>
-              <Button type="submit" disabled={pending} fullWidth>
-                {pending ? 'Création…' : 'Créer mon compte'}
-              </Button>
-            </form>
-          )}
+            {error && <p className={styles.error}>{error}</p>}
+            {success && <p className={styles.success}>{success}</p>}
 
-          <div className={styles.links}>
-            <Link href="/compte/connexion">Déjà un compte ? Se connecter</Link>
+            {!success && (
+              <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="nom">Nom</label>
+                  <input className={styles.input} id="nom" name="nom" type="text" autoComplete="name" />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="email">E-mail</label>
+                  <input className={styles.input} id="email" name="email" type="email" autoComplete="email" required />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="password">Mot de passe</label>
+                  <input
+                    className={styles.input}
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="new-password"
+                    minLength={8}
+                    required
+                  />
+                  <span className={styles.hint}>8 caractères minimum.</span>
+                </div>
+                <Button type="submit" disabled={pending} fullWidth>
+                  {pending ? 'Création…' : 'Créer mon compte'}
+                </Button>
+              </form>
+            )}
+
+            <div className={styles.links}>
+              <Link href="/compte/connexion">Déjà un compte ? Se connecter</Link>
+            </div>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </>
