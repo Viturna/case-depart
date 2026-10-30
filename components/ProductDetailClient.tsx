@@ -69,26 +69,36 @@ function Icon({ name }: { name: (typeof avantages)[number]['icon'] }) {
   );
 }
 
-// Vraie couverture du PDF, extraite du carnet final (pas un mockup) — seulement
-// pour les thèmes qui en ont une (automation/case-depart-template-*.html).
-const REAL_COVERS: Record<string, string> = {
-  'carnet-noel': '/covers/noel.jpg',
-  'carnet-halloween': '/covers/halloween.jpg',
+// Vraies pages extraites du PDF final (pas des mockups) — seulement pour les
+// thèmes qui en ont (automation/case-depart-template-*.html).
+const REAL_PAGES: Record<string, Record<PageId, string>> = {
+  'carnet-noel': {
+    couv: '/covers/noel.jpg',
+    grille: '/covers/noel-grille.jpg',
+    ravito: '/covers/noel-ravito.jpg',
+    corrections: '/covers/noel-corrections.jpg',
+  },
+  'carnet-halloween': {
+    couv: '/covers/halloween.jpg',
+    grille: '/covers/halloween-grille.jpg',
+    ravito: '/covers/halloween-ravito.jpg',
+    corrections: '/covers/halloween-corrections.jpg',
+  },
 };
 
 // Aperçu d'une page du carnet
 function PageMock({ id, product }: { id: PageId; product: ProductItem }) {
   const theme = getTheme(product.theme);
+  const realPage = REAL_PAGES[product.slug]?.[id];
+  if (realPage) {
+    return (
+      <div className={`${styles.sheet} ${id === 'couv' ? styles.cover : ''}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={realPage} alt={pages.find((p) => p.id === id)!.label + ' du ' + product.nom} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      </div>
+    );
+  }
   if (id === 'couv') {
-    const realCover = REAL_COVERS[product.slug];
-    if (realCover) {
-      return (
-        <div className={`${styles.sheet} ${styles.cover}`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={realCover} alt={'Couverture du ' + product.nom} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        </div>
-      );
-    }
     return (
       <div className={`${styles.sheet} ${styles.cover}`} style={{ background: theme.bg, color: theme.ink }}>
         <GridPattern className={styles.coverGrid} />

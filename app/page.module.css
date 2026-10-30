@@ -42,7 +42,9 @@
   padding-block: var(--space-7) var(--space-6);
 }
 
-.heroTitle { font-size: var(--fs-h1); }
+/* lh-tight (1.05) colle trop les lignes : l'accent de "tête" mord sur la
+   ligne du dessus. Un poil plus d'air, uniquement ici (titre sur 3 lignes). */
+.heroTitle { font-size: var(--fs-h1); line-height: 1.18; }
 
 
 .heroFoot { display: grid; gap: var(--space-5); }
