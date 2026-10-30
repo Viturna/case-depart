@@ -135,7 +135,13 @@
         "method": "PATCH",
         "url": "={{ $env.SUPABASE_URL + '/rest/v1/carnets?id=eq.' + $json.query.carnet_id }}",
         "authentication": "none",
-        "options": {},
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        },
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [

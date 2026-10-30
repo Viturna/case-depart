@@ -206,11 +206,11 @@ test('workflow A — PDFShift et Supabase configurés selon la doc', () => {
 
 test('workflow A — le bundle génère un carnet valide hors Node', () => {
   const starter = runGeneration({
-    theme: 'Noël',
-    type: 'Starter',
-    level: '',
-    edition: 'Édition 2026',
-    formats: 'A4 + A5 livret'
+    'Thème': 'Noël',
+    'Type de carnet': 'Starter',
+    "Niveau (uniquement pour L'Étape)": '',
+    'Édition': 'Édition 2026',
+    'Formats': 'A4 + A5 livret'
   });
 
   assert.equal(starter.slug, 'noel-starter-edition-2026');
@@ -246,11 +246,11 @@ test('workflow A — le bundle génère un carnet valide hors Node', () => {
 
 test('workflow A — carnet thématique complet : 30 grilles + finale, déterministe', () => {
   const input = {
-    theme: 'Noël',
-    type: 'Carnet thématique',
-    level: '',
-    edition: 'Édition 2026',
-    formats: 'A4 seulement'
+    'Thème': 'Noël',
+    'Type de carnet': 'Carnet thématique',
+    "Niveau (uniquement pour L'Étape)": '',
+    'Édition': 'Édition 2026',
+    'Formats': 'A4 seulement'
   };
   const first = runGeneration(input);
   const second = runGeneration(input);

@@ -319,16 +319,24 @@ function normalizeSlug(value) {
     .replace(/^-+|-+$/g, '');
 }
 
-const type = TYPE_MAP[input.type] || (Carnet.TYPES.indexOf(input.type) !== -1 ? input.type : 'thematique');
-const level = LEVEL_MAP[input.level] || input.level || null;
+// Le formulaire n8n renvoie le libellé exact du champ comme clé JSON
+// (pas de fieldName défini sur les nœuds Form Trigger générés).
+const rawType = input['Type de carnet'];
+const rawLevel = input["Niveau (uniquement pour L'Étape)"];
+const rawFormats = input['Formats'];
+const rawEdition = input['Édition'];
+const rawTheme = input['Thème'];
+
+const type = TYPE_MAP[rawType] || (Carnet.TYPES.indexOf(rawType) !== -1 ? rawType : 'thematique');
+const level = LEVEL_MAP[rawLevel] || rawLevel || null;
 
 if (type === 'etape' && !level) {
   throw new Error("Choisis un niveau (Échauffement, Sprint ou Marathon) pour un carnet L'Étape.");
 }
-const formats = FORMAT_MAP[input.formats] || ['A4', 'A5-livret'];
-const edition = String(input.edition || 'Édition 2026').trim();
+const formats = FORMAT_MAP[rawFormats] || ['A4', 'A5-livret'];
+const edition = String(rawEdition || 'Édition 2026').trim();
 
-const requestedTheme = String(input.theme || '').trim();
+const requestedTheme = String(rawTheme || '').trim();
 let themeKey = Object.keys(THEMES).find(function (key) {
   return (
     key === requestedTheme ||
@@ -614,6 +622,7 @@ function buildWorkflowA() {
       ]),
       body: '={{ JSON.stringify($json.carnetRow) }}',
       retry: true,
+      options: { response: { response: { responseFormat: 'json' } } },
       notes: 'Crée le carnet au statut brouillon et renvoie son id.'
     }),
 
@@ -654,7 +663,7 @@ function buildWorkflowA() {
         parameters: [{ name: 'X-API-Key', value: variable('PDFSHIFT_API_KEY') }]
       },
       body:
-        "={{ JSON.stringify({ source: $json.html, format: 'A4', landscape: $json.format === 'A5-livret', margin: { top: '0', right: '0', bottom: '0', left: '0' }, use_print: true, timeout: 180, sandbox: String($env.PDFSHIFT_SANDBOX || 'false') === 'true' }) }}",
+        "={{ JSON.stringify({ source: $json.html, format: 'A4', landscape: $json.format === 'A5-livret', margin: { top: '0', right: '0', bottom: '0', left: '0' }, use_print: true, timeout: 30, sandbox: String($env.PDFSHIFT_SANDBOX || 'false') === 'true' }) }}",
       retry: true,
       maxTries: 2,
       waitBetweenTries: 5000,
@@ -735,7 +744,8 @@ function buildWorkflowA() {
         { name: 'Accept', value: 'application/vnd.pgrst.object+json' }
       ]),
       body: '={{ JSON.stringify({ statut: \'a_valider\', pdf_paths: $json.pdf_paths }) }}',
-      retry: true
+      retry: true,
+      options: { response: { response: { responseFormat: 'json' } } }
     }),
 
     ifNode({
@@ -879,6 +889,7 @@ function buildWorkflowA2() {
       body:
         '={{ JSON.stringify({ statut: \'pret\', valide_le: new Date().toISOString() }) }}',
       retry: true,
+      options: { response: { response: { responseFormat: 'json' } } },
       notes: 'Passe le carnet de a_valider à pret et horodate la validation.'
     }),
 
@@ -1278,6 +1289,7 @@ function buildWorkflowB() {
       body:
         '={{ JSON.stringify({ stripe_session_id: $json.stripe_session_id, email: $json.email, carnet_slug: $json.carnet_slug, format: $json.format, gift: $json.gift, recipient_name: $json.recipient_name || null, gift_message: $json.gift_message || null, buyer_email: $json.buyer_email || null, montant_cents: $json.montant_cents, statut: \'recue\', metadata: { price_id: $json.price_id, label: $json.label } }) }}',
       retry: true,
+      options: { response: { response: { responseFormat: 'json' } } },
       notes: 'Enregistrement de la commande avant toute livraison.'
     }),
 
@@ -1364,7 +1376,7 @@ return [{ json: { pdf_path: pdfPath } }];
         parameters: [{ name: 'X-API-Key', value: variable('PDFSHIFT_API_KEY') }]
       },
       body:
-        "={{ JSON.stringify({ source: $json.html, format: 'A4', landscape: false, margin: { top: '0', right: '0', bottom: '0', left: '0' }, use_print: true, timeout: 180, sandbox: String($env.PDFSHIFT_SANDBOX || 'false') === 'true' }) }}",
+        "={{ JSON.stringify({ source: $json.html, format: 'A4', landscape: false, margin: { top: '0', right: '0', bottom: '0', left: '0' }, use_print: true, timeout: 30, sandbox: String($env.PDFSHIFT_SANDBOX || 'false') === 'true' }) }}",
       retry: true,
       maxTries: 2,
       waitBetweenTries: 5000,

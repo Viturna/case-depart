@@ -182,14 +182,17 @@
   }
 
   function decorateGrids(grids, theme, options) {
-    var byLevel = {
-      echauffement: 0,
-      sprint: 0,
-      marathon: 0
-    };
+    // byLevel numérote le libellé (E01, E02…), remis à zéro à chaque étape
+    // (ex. Tour de l'année). positionCounter numérote la colonne `position`
+    // en base, qui doit rester unique sur tout le carnet (carnet_id, niveau,
+    // position) même quand plusieurs étapes partagent un niveau : le caller
+    // passe le même objet d'une étape à l'autre pour qu'il continue à monter.
+    var byLevel = { echauffement: 0, sprint: 0, marathon: 0 };
+    var positionCounter = (options && options.positionCounter) || { echauffement: 0, sprint: 0, marathon: 0 };
 
     return grids.map(function (grid) {
       byLevel[grid.level] += 1;
+      positionCounter[grid.level] += 1;
       var labelPrefix = options && options.labelPrefix ? options.labelPrefix : '';
       var label = buildGridLabel(grid.level, byLevel[grid.level], labelPrefix);
       var decorated = {
@@ -197,7 +200,7 @@
         level: grid.level,
         levelLabel: LEVEL_LABEL[grid.level],
         levelArrows: LEVEL_ARROWS[grid.level],
-        position: byLevel[grid.level],
+        position: positionCounter[grid.level],
         label: label,
         puzzle: grid.puzzle,
         solution: grid.solution,
@@ -367,6 +370,7 @@
       });
       assert(themeSlugs.length >= 1, 'Aucun thème disponible pour le Tour de l\'année.');
 
+      var tourPositionCounter = { echauffement: 0, sprint: 0, marathon: 0 };
       themeSlugs.forEach(function (themeSlug, index) {
         var currentTheme = getTheme(catalog, themeSlug);
         var themeGrids = generateThemeGrids(
@@ -376,7 +380,8 @@
           usedPuzzles
         );
         var decoratedThemeGrids = decorateGrids(themeGrids, currentTheme, {
-          labelPrefix: 'T' + (index + 1) + '-'
+          labelPrefix: 'T' + (index + 1) + '-',
+          positionCounter: tourPositionCounter
         });
         grids = grids.concat(decoratedThemeGrids);
 
