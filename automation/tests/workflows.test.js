@@ -401,7 +401,9 @@ test('workflow B — mapping produit contient le catalogue products.json', () =>
   const mapNode = nodeByName(workflowB, 'Mapper le produit');
   const code = mapNode.parameters.jsCode;
   assert.ok(code.includes('CASE_DEPART_PRODUCTS'), 'catalogue produits absent du nœud');
-  assert.ok(code.includes('price_PLACEHOLDER'), 'products.json non injecté');
+  const products = require('../config/products.json');
+  const firstPriceId = Object.keys(products).find((k) => k !== '_comment');
+  assert.ok(code.includes(firstPriceId), 'products.json non injecté');
   assert.ok(code.includes('carnet_slug'), 'champ carnet_slug absent');
   assert.ok(code.includes('payment_status'), 'vérification payment_status absente');
   assert.ok(code.includes('recipient_name'), 'extraction recipient_name absente');

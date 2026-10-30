@@ -73,11 +73,11 @@
       var position = (i * cell).toFixed(2);
       var width = i === 0 || i === 9 ? outer : i % 3 === 0 ? box : thin;
       var stroke = '<line x1="' + position + '" y1="0" x2="' + position + '" y2="' + size + '"';
-      stroke += ' stroke="#315A54" stroke-width="' + width.toFixed(2) + '"/>';
+      stroke += ' stroke="#041735" stroke-width="' + width.toFixed(2) + '"/>';
       parts.push(stroke);
 
       stroke = '<line x1="0" y1="' + position + '" x2="' + size + '" y2="' + position + '"';
-      stroke += ' stroke="#315A54" stroke-width="' + width.toFixed(2) + '"/>';
+      stroke += ' stroke="#041735" stroke-width="' + width.toFixed(2) + '"/>';
       parts.push(stroke);
     }
 
@@ -85,7 +85,7 @@
     parts.push(
       '<g font-family="\'IBM Plex Mono\', monospace" font-weight="600" font-size="' +
         fontSize +
-        '" fill="#315A54" text-anchor="middle" dominant-baseline="central">'
+        '" fill="#041735" text-anchor="middle" dominant-baseline="central">'
     );
 
     for (var index = 0; index < 81; index++) {
@@ -115,7 +115,7 @@
       parts.push(
         '<polygon points="' +
           I.starPath(cx, cy, outerRadius, innerRadius) +
-          '" fill="#315A54"/>'
+          '" fill="#041735"/>'
       );
     }
 

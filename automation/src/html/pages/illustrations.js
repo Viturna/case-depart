@@ -17,10 +17,10 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  var SABLE = '#EFDEC2';
-  var SAPIN = '#315A54';
-  var BRIQUE = '#9F1014';
-  var ROSE = '#FEC2DC';
+  var SABLE = '#FFFFFF';
+  var SAPIN = '#041735';
+  var BRIQUE = '#161616';
+  var ROSE = '#E8D48A';
 
   function starPath(cx, cy, outer, inner) {
     var points = [];

@@ -76,13 +76,13 @@
     return `
 /* ===== Case Départ — gabarit carnet ===== */
 :root{
-  --sable:#EFDEC2;
-  --sapin:#315A54;
-  --brique:#9F1014;
-  --rose:#FEC2DC;
-  --font-title:'Archivo','Archivo Black',sans-serif;
-  --font-body:'Inter',Arial,sans-serif;
-  --font-mono:'IBM Plex Mono','SFMono-Regular',monospace;
+  --sable:#FFFFFF;
+  --sapin:#041735;
+  --brique:#161616;
+  --rose:#E8D48A;
+  --font-title:'Anton','Impact',sans-serif;
+  --font-body:'BDO Grotesk','Inter',Arial,sans-serif;
+  --font-mono:'BDO Grotesk','Inter',Arial,sans-serif;
 }
 ${fontCss}
 
@@ -105,7 +105,6 @@ table{border-collapse:collapse}
 
 .h{
   font-family:var(--font-title);
-  font-stretch:125%;
   font-weight:900;
   text-transform:uppercase;
   line-height:.9;
@@ -184,7 +183,7 @@ table{border-collapse:collapse}
   z-index:2;
 }
 .cover-badge .mono{font-size:6.5pt;font-weight:600;letter-spacing:.1em}
-.cover-badge-year{font-family:var(--font-title);font-stretch:125%;font-weight:900;font-size:11pt;line-height:1}
+.cover-badge-year{font-family:var(--font-title);font-weight:900;font-size:11pt;line-height:1}
 .cover-gift{
   align-self:flex-start;
   border:1px solid var(--sapin);

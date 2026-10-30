@@ -38,10 +38,10 @@
 
   function paletteRow() {
     var colors = [
-      { hex: '#EFDEC2', label: 'SABLE' },
-      { hex: '#315A54', label: 'SAPIN' },
-      { hex: '#9F1014', label: 'BRIQUE' },
-      { hex: '#FEC2DC', label: 'ROSE' }
+      { hex: '#FFFFFF', label: 'BLANC' },
+      { hex: '#041735', label: 'NUIT' },
+      { hex: '#161616', label: 'NOIR' },
+      { hex: '#E8D48A', label: 'DORÉ' }
     ];
 
     return (

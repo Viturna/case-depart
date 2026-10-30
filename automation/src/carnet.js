@@ -52,7 +52,7 @@
     throw new Error('CaseDepartCarnet : le module prng.js est introuvable.');
   }
 
-  var PALETTE = ['#EFDEC2', '#315A54', '#9F1014', '#FEC2DC'];
+  var PALETTE = ['#FFFFFF', '#041735', '#161616', '#E8D48A'];
   var LEVEL_ORDER = ['echauffement', 'sprint', 'marathon'];
   var LEVEL_PREFIX = {
     echauffement: 'E',

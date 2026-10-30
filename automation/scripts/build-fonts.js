@@ -2,7 +2,9 @@
 /**
  * Télécharge les polices du design et génère fonts.css + fonts.js.
  *
- * Polices : Archivo Expanded 900, Inter 400/600, IBM Plex Mono 500/600.
+ * Polices : Anton 400 (titre du site, --font-title) + Inter 400/500.
+ * 'BDO Grotesk' (--font-body du site) n'existe pas sur Google Fonts — Inter
+ * sert de repli fiable pour le corps de texte du PDF.
  * Les fichiers sont intégrés en base64 pour que le HTML soit autonome.
  *
  * Exécution : npm run build:fonts
@@ -16,7 +18,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const GOOGLE_CSS_URL =
-  'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,900&family=Inter:wght@400;600&family=IBM+Plex+Mono:wght@500;600&display=swap';
+  'https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500&display=swap';
 
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
@@ -122,7 +124,7 @@ async function main() {
 
   const finalCss =
     '/* GÉNÉRÉ PAR scripts/build-fonts.js — NE PAS ÉDITER À LA MAIN. */\n' +
-    '/* Archivo Expanded 900 · Inter 400/600 · IBM Plex Mono 500/600 */\n\n' +
+    '/* Anton 400 · Inter 400/500 */\n\n' +
     output.join('\n\n') +
     '\n';
 

@@ -37,13 +37,13 @@
   function motif() {
     return (
       '<svg class="gift-motif" viewBox="0 0 240 240" role="img" aria-label="Grille 3 par 3">' +
-      '<g fill="none" stroke="#315A54" stroke-width="2">' +
+      '<g fill="none" stroke="#041735" stroke-width="2">' +
       '<rect x="1" y="1" width="238" height="238"/>' +
       '<path d="M80 1V239M160 1V239M1 80H239M1 160H239"/>' +
       '</g>' +
-      '<rect x="1" y="1" width="79" height="79" fill="#FEC2DC"/>' +
-      '<rect x="161" y="161" width="78" height="78" fill="#315A54"/>' +
-      '<g fill="#315A54" font-family="IBM Plex Mono, monospace" font-size="34" font-weight="600" text-anchor="middle">' +
+      '<rect x="1" y="1" width="79" height="79" fill="#E8D48A"/>' +
+      '<rect x="161" y="161" width="78" height="78" fill="#041735"/>' +
+      '<g fill="#041735" font-family="IBM Plex Mono, monospace" font-size="34" font-weight="600" text-anchor="middle">' +
       '<text x="120" y="120" dominant-baseline="central">5</text>' +
       '<text x="200" y="120" dominant-baseline="central">9</text>' +
       '<text x="120" y="200" dominant-baseline="central">.</text>' +
