@@ -45,6 +45,9 @@ export default function Header({ cartCount: propCartCount }: { cartCount?: numbe
         </nav>
 
         <div className={styles.right}>
+          <Link href="/compte" className={styles.cart} aria-label="Mon compte">
+            Compte
+          </Link>
           <button
             type="button"
             className={styles.cart}

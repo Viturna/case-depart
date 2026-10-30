@@ -1,0 +1,91 @@
+.wrap {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sapin);
+}
+
+.input {
+  height: 48px;
+  border: var(--border-1);
+  background-color: var(--sable);
+  color: var(--sapin);
+  padding: 0 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.input:focus-visible {
+  outline: var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--sapin);
+  opacity: 0.8;
+}
+
+.error {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--erreur);
+  border-left: 2px solid var(--erreur);
+  padding-left: 10px;
+}
+
+.success {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--sapin);
+  border-left: 2px solid var(--sapin);
+  padding-left: 10px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.links a {
+  color: var(--sapin);
+  text-decoration: underline;
+}
+
+.dangerZone {
+  margin-top: 48px;
+  border: 1px solid var(--brique);
+  padding: 20px;
+}
+
+.dangerTitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brique);
+  margin: 0 0 8px;
+}
