@@ -5,6 +5,8 @@
  * Polices : Anton 400 (titre du site, --font-title) + Inter 400/500.
  * 'BDO Grotesk' (--font-body du site) n'existe pas sur Google Fonts — Inter
  * sert de repli fiable pour le corps de texte du PDF.
+ * Oswald 400/500 : police des pages couverture/grille calquées sur
+ * case-depart-template-halloween.html et case-depart-template-noel.html.
  * Les fichiers sont intégrés en base64 pour que le HTML soit autonome.
  *
  * Exécution : npm run build:fonts
@@ -18,7 +20,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const GOOGLE_CSS_URL =
-  'https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500&display=swap';
+  'https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500&family=Oswald:wght@400;500&display=swap';
 
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';

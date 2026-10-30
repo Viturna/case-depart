@@ -33,3 +33,6 @@ next-env.d.ts
 # scratch
 /scratch/
 .vercel
+
+# App mobile (wrapper Capacitor) — projet local, pas versionné ici
+/mobile/

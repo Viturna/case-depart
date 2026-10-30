@@ -40,6 +40,14 @@
     "citation": {
       "texte": "Le sapin n'a jamais rempli une grille. Il préfère regarder.",
       "auteur": "Le 9 de la case I9"
+    },
+    "coverColors": {
+      "fondCouverture": "#FFBBEF",
+      "fondGrille": "#F9EEF6",
+      "titre": "#9B1417",
+      "encreCouv": "#A82B42",
+      "encreGrille": "#A01211",
+      "illustration": "noel"
     }
   },
   "halloween": {
@@ -83,6 +91,14 @@
     "citation": {
       "texte": "Les fantômes n'ont pas peur du vide. Ils y habitent.",
       "auteur": "La gomme"
+    },
+    "coverColors": {
+      "fondCouverture": "#FFFFFF",
+      "fondGrille": "#FFF4EA",
+      "titre": "#8A2C02",
+      "encreCouv": "#A83A06",
+      "encreGrille": "#9A3304",
+      "illustration": "halloween"
     }
   },
   "saint-valentin": {

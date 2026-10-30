@@ -46,10 +46,20 @@
       ? '<span class="mono buyer-email">' + escapeHtml(options.buyerEmail) + '</span>'
       : '';
 
+    // Un thème avec coverColors (Halloween, Noël…) reskinne toutes ses pages
+    // via pageShell, pas seulement la couverture et les grilles : --sable et
+    // --sapin sont les variables globales lues par le CSS existant (fond,
+    // filets, pied de page), on les redéfinit juste localement sur la page.
+    var cc = carnet.theme && carnet.theme.coverColors;
+    var style = cc
+      ? ' style="--sable:' + cc.fondGrille + ';--sapin:' + cc.encreGrille +
+        ';--font-body:\'Oswald\',Arial,sans-serif"'
+      : '';
+
     return (
       '<section class="page ' +
       (config.className || '') +
-      '" data-page="' +
+      '"' + style + ' data-page="' +
       config.number +
       '">' +
       '<div class="page-inner">' +

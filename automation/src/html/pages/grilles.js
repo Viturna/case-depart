@@ -123,6 +123,35 @@
     return parts.join('');
   }
 
+  /** 81 cases, chiffre si donnée (puzzle), vide sinon ; case étoilée marquée. */
+  function gridSpansV2(grid) {
+    var board = typeof grid.puzzle === 'string' ? digitsOf(grid.puzzle) : grid.puzzle;
+    var out = '';
+    for (var i = 0; i < 81; i++) {
+      var value = board[i];
+      var starred = grid.starCell === i;
+      out += '<span' + (starred ? ' class="etoile"' : '') + '>' + (value ? value : '') + '</span>';
+    }
+    return out;
+  }
+
+  /** Page de grille calquée sur case-depart-template-halloween.html / -noel.html. */
+  function pageV2(carnet, grid, gridNumber) {
+    var theme = carnet.theme;
+    var cc = theme.coverColors;
+    var config = H.levelConfig(grid.level);
+    var style = '--fond-grille:' + cc.fondGrille + ';--encre-grille:' + cc.encreGrille;
+
+    return (
+      '<section class="page page-grille" style="' + H.escapeHtml(style) + '">' +
+      '<div class="entete"><span>' + H.escapeHtml(theme.nom.toUpperCase()) + '</span><span>' +
+      H.escapeHtml(config.label.toUpperCase()) + ' ' + H.escapeHtml(config.arrows) + '</span></div>' +
+      '<div class="grille">' + gridSpansV2(grid) + '</div>' +
+      '<div class="pied"><span>CHRONO : __ : __</span><span>GRILLE ' + gridNumber + '</span></div>' +
+      '</section>'
+    );
+  }
+
   function gridNote(grid) {
     if (grid.starCell != null) {
       return (
@@ -135,7 +164,10 @@
   /**
    * Page d'une grille à résoudre.
    */
-  function page(carnet, options, section, grid, pageNumber) {
+  function page(carnet, options, section, grid, pageNumber, gridNumber) {
+    if (carnet.theme.coverColors) {
+      return pageV2(carnet, grid, gridNumber);
+    }
     var config = H.levelConfig(grid.level);
     var isStarred = grid.starCell != null;
     var content =

@@ -464,6 +464,31 @@ table{border-collapse:collapse}
 .slot{width:148.5mm;height:210mm;overflow:hidden;position:relative}
 .slot .page{width:148.5mm;height:210mm;margin:0}
 
+/* ---------- Couverture / grille v2 (calqué sur case-depart-template-*.html) ----------
+   Variables posées en inline-style par instance (--fond-couverture, --titre, etc.),
+   pas globales : chaque thème (Halloween, Noël…) a ses propres couleurs ici,
+   volontairement hors de la palette d'impression partagée du reste du carnet. */
+.couverture{background-image:var(--illustration);background-size:100% 100%;background-blend-mode:multiply;background-color:var(--fond-couverture);color:var(--encre-couv)}
+.couverture .grille{top:18.9%;--ext:.75mm;--fin:.6mm;--epais:1.05mm}
+.edition{position:absolute;left:16.75%;top:15%;font-family:'Oswald',sans-serif;font-weight:400;font-size:7.3mm;line-height:1;letter-spacing:-.055em;white-space:nowrap}
+.titre{position:absolute;left:15.95%;top:70.45%;width:68.3%;font-family:'Anton',sans-serif;font-weight:400;font-size:28.5mm;line-height:1;letter-spacing:-.056em;color:var(--titre);white-space:nowrap}
+.nombre{position:absolute;left:15.85%;top:81.2%;font-family:'Oswald',sans-serif;font-weight:400;font-size:7.25mm;line-height:1;white-space:nowrap}
+
+.page-grille{background:var(--fond-grille);color:var(--encre-grille)}
+.page-grille .grille{top:22.9%;--ext:.95mm;--fin:.6mm;--epais:1.25mm}
+.entete{position:absolute;left:15.55%;width:68.85%;top:15.1%;height:4.3%;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1mm solid currentColor;padding-bottom:1.35%;font-family:'Anton',sans-serif;font-weight:400;font-size:6.9mm;line-height:1;white-space:nowrap}
+.pied span:last-child{letter-spacing:-.04em}
+.pied{position:absolute;left:15.65%;width:68.6%;top:75.15%;display:flex;justify-content:space-between;align-items:baseline;font-family:'Oswald',sans-serif;font-weight:400;font-size:7.1mm;line-height:1;letter-spacing:-.012em;white-space:nowrap}
+
+.grille{position:absolute;left:15.85%;width:68.3%;aspect-ratio:1/1;border:var(--ext) solid currentColor;border-radius:15mm;overflow:hidden;display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr)}
+.grille span{position:relative;display:flex;align-items:center;justify-content:center;border-right:var(--fin) solid currentColor;border-bottom:var(--fin) solid currentColor;font-family:'Oswald',sans-serif;font-weight:500;font-size:9mm;line-height:1}
+.grille span.etoile::after{content:'★';position:absolute;top:.3mm;right:.6mm;font-size:3mm;line-height:1}
+.grille span:nth-child(9n){border-right:none}
+.grille span:nth-child(9n+3),.grille span:nth-child(9n+6){border-right-width:var(--epais)}
+.grille span:nth-child(n+73){border-bottom:none}
+.grille span:nth-child(n+19):nth-child(-n+27),
+.grille span:nth-child(n+46):nth-child(-n+54){border-bottom-width:var(--epais)}
+
 /* ---------- Écran / impression ---------- */
 @media screen{
   body{padding:8mm 0}
@@ -509,6 +534,7 @@ table{border-collapse:collapse}
 
     var pages = [];
     var pageNumber = 1;
+    var gridNumber = 0;
 
     pages.push(Couverture.page(carnet));
     pageNumber++;
@@ -524,7 +550,8 @@ table{border-collapse:collapse}
     carnet.sections.forEach(function (section) {
       if (section.kind === 'grids') {
         section.grids.forEach(function (grid) {
-          pages.push(Grilles.page(carnet, options, section, grid, pageNumber));
+          gridNumber++;
+          pages.push(Grilles.page(carnet, options, section, grid, pageNumber, gridNumber));
           pageNumber++;
         });
       } else if (section.kind === 'theme') {
@@ -533,7 +560,8 @@ table{border-collapse:collapse}
           arrows: ''
         };
         section.grids.forEach(function (grid) {
-          pages.push(Grilles.page(carnet, options, themeSection, grid, pageNumber));
+          gridNumber++;
+          pages.push(Grilles.page(carnet, options, themeSection, grid, pageNumber, gridNumber));
           pageNumber++;
         });
       } else if (section.kind === 'coloriage') {

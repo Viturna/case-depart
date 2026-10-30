@@ -26,14 +26,16 @@
     loadModule('../helpers.js', 'CaseDepartHtmlHelpers');
   var I =
     loadModule('./illustrations.js', 'CaseDepartIllustrations');
-  var api = factory(H, I);
+  var Covers =
+    loadModule('../cover-illustrations.js', 'CaseDepartCoverIllustrations');
+  var api = factory(H, I, Covers);
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
   }
   if (typeof globalThis !== 'undefined') {
     globalThis.CaseDepartPageCouverture = api;
   }
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (H, I) {
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (H, I, Covers) {
   'use strict';
 
   function countRavitaillements(carnet) {
@@ -42,8 +44,40 @@
     }).length;
   }
 
+  // 9×9 cases vides, juste le motif décoratif (pas de vraie grille sur la couverture).
+  function emptyGridSpans() {
+    var out = '';
+    for (var i = 0; i < 81; i++) out += '<span></span>';
+    return out;
+  }
+
+  /** Couverture calquée sur case-depart-template-halloween.html / -noel.html. */
+  function pageV2(carnet) {
+    var theme = carnet.theme;
+    var cc = theme.coverColors;
+    var gridCount = carnet.grids.length + (carnet.finalGrid ? 1 : 0);
+    var illustration = (Covers && Covers[cc.illustration]) || '';
+    var style =
+      '--fond-couverture:' + cc.fondCouverture + ';' +
+      '--titre:' + cc.titre + ';' +
+      '--encre-couv:' + cc.encreCouv + ';' +
+      '--illustration:url("' + illustration + '")';
+
+    return (
+      '<section class="page couverture" style="' + H.escapeHtml(style) + '">' +
+      '<p class="edition">CASE DÉPART - ' + H.escapeHtml(carnet.edition.toUpperCase()) + '</p>' +
+      '<div class="grille">' + emptyGridSpans() + '</div>' +
+      '<h1 class="titre">' + H.escapeHtml(theme.nom.toUpperCase()) + '</h1>' +
+      '<p class="nombre">' + gridCount + ' grilles</p>' +
+      '</section>'
+    );
+  }
+
   function page(carnet) {
     var theme = carnet.theme;
+    if (theme.coverColors) {
+      return pageV2(carnet);
+    }
     var gridCount = carnet.grids.length + (carnet.finalGrid ? 1 : 0);
     var ravitaillements = countRavitaillements(carnet);
     var gift = carnet.gift && carnet.gift.recipientName

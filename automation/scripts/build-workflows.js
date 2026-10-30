@@ -35,6 +35,7 @@ const MODULE_FILES = [
   'src/carnet.js',
   'src/html/helpers.js',
   'src/html/pages/illustrations.js',
+  'src/html/cover-illustrations.js',
   'src/html/pages/grilles.js',
   'src/html/pages/couverture.js',
   'src/html/pages/ligne-depart.js',
