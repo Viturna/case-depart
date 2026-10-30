@@ -28,9 +28,11 @@ export default function CartDrawer() {
         body: JSON.stringify({
           items: items.map((item) => ({
             id: item.id,
+            slug: item.slug,
             title: item.nom,
             format: item.format,
             gift: item.isGift,
+            recipientName: item.recipientName,
             price: item.prix,
           })),
           email: email.trim(),

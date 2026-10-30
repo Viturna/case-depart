@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendOrderConfirmationEmail } from '@/lib/mailer';
+import { resolveFirstDownloadUrl, DeliveryItem } from '@/lib/carnetDelivery';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,13 +38,21 @@ export async function GET(req: Request) {
       const orderNumber = session.id.slice(-8).toUpperCase();
       const totalAmount = session.amount_total ? (session.amount_total / 100).toFixed(2).replace('.', ',') + ' €' : '0,00 €';
       const itemsSummary = session.metadata?.items_summary || 'Carnets Case Départ (PDF)';
+      let deliveryItems: DeliveryItem[] = [];
+      try {
+        deliveryItems = JSON.parse(session.metadata?.items_json || '[]');
+      } catch {
+        deliveryItems = [];
+      }
 
       if (customerEmail) {
         // Envoi de l'e-mail avec template complet
+        const downloadUrl = await resolveFirstDownloadUrl(deliveryItems);
         await sendOrderConfirmationEmail({
           customerEmail,
           orderNumber,
           totalAmount,
+          downloadUrl: downloadUrl || undefined,
           items: [
             {
               name: itemsSummary,

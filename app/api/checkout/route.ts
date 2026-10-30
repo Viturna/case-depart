@@ -2,9 +2,11 @@ import { NextResponse } from 'next/server';
 
 interface CartItem {
   id: string;
+  slug: string;
   title: string;
   format: 'A4' | 'A5';
   gift: boolean;
+  recipientName?: string;
   price: number;
 }
 
@@ -35,6 +37,13 @@ export async function POST(req: Request) {
     // Pass metadata to identify the items in webhooks or verification
     params.append('metadata[items_summary]', items.map((i) => `${i.title} (${i.format})`).join(', ').slice(0, 490));
     params.append('metadata[customer_email]', email || '');
+    // Permet au webhook de retrouver le vrai carnet (slug/format) pour le lien de téléchargement.
+    params.append(
+      'metadata[items_json]',
+      JSON.stringify(
+        items.map((i) => ({ slug: i.slug, format: i.format, gift: i.gift, recipientName: i.recipientName || null }))
+      ).slice(0, 490)
+    );
 
     items.forEach((item, index) => {
       const unitAmountInCents = Math.round(item.price * 100);
