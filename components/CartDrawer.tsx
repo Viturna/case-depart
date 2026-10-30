@@ -1,16 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './CartDrawer.module.css';
 import { useCart } from '@/context/CartContext';
+import { createClient } from '@/lib/supabase/client';
 import Button from './Button';
 
 export default function CartDrawer() {
   const { items, removeItem, clearCart, cartTotal, isCartOpen, setIsCartOpen } = useCart();
   const [email, setEmail] = useState('');
+  const [accountEmail, setAccountEmail] = useState('');
   const [isOrdered, setIsOrdered] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Si connecté, utilise l'e-mail du compte pour que la commande apparaisse dans l'historique.
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.email) {
+        setAccountEmail(user.email);
+        setEmail(user.email);
+      }
+    });
+  }, []);
 
   if (!isCartOpen) return null;
 
@@ -151,6 +164,11 @@ export default function CartDrawer() {
                   borderRadius: 0,
                 }}
               />
+              {accountEmail && email !== accountEmail && (
+                <div style={{ color: 'var(--sapin)', opacity: 0.8, fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
+                  Autre e-mail que ton compte ({accountEmail}) : la commande n&apos;apparaîtra pas dans ton historique.
+                </div>
+              )}
               {errorMessage && (
                 <div style={{ color: 'var(--brique)', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
                   {errorMessage}
