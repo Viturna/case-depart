@@ -104,6 +104,7 @@ export default function Footer() {
         <div className={`label ${styles.bottom}`}>
           <span>© 2026 Case Départ</span>
           <span>Échauffement · Sprint · Marathon</span>
+          <Link href="/politique-confidentialite" className={styles.link}>Politique de confidentialité</Link>
         </div>
       </div>
     </footer>
